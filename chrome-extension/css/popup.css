@@ -1,0 +1,27 @@
+body {
+  overflow: hidden;
+  margin: 10px;
+  padding: 10px;
+  background: white;
+
+  font-family: Verdana, sans-serif;
+  font-size: 11px;
+}
+#wrapper {
+  width: 200px;
+}
+#content {
+  clear: both;
+}
+
+h1, h2 {
+  font-size: 14px;
+  float: left;
+  margin: 10px 5px 10px 0px;
+}
+#onMode {
+  color: #2aa198;
+}
+#offMode {
+  color: #dc322f;
+}

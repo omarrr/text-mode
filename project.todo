@@ -1,0 +1,19 @@
+# Plain Text
+
++ github repo
+- UI
+	+ icon
+	+ on/off button state
+- DOM
+	+ image replacement
+	- font substitution
+	- skip js
+	- skip loading of assets (imgs, obj, fonts, etc)
+	- detect DOM changes (ajax, etc)
+- Settings
+	- enable / disable JS ? default=false
+	- enable / disable CSS ? default=false
+	- enable / disable IMGs; default=true
+- QA
+	- test on: http://money.cnn.com/ << takes forever to load
+	- fix initial page load flash

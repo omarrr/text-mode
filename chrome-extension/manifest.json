@@ -1,0 +1,71 @@
+{
+  "name": "Plain Text",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Renders clean simple text based pages",
+
+  "permissions": [
+    "tabs",
+    "webRequest",
+    "webRequestBlocking",
+    "http://*/*",
+    "https://*/*"
+  ],
+
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ]
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*.nytimes.com/*",
+        "http://*.amazon.com/*",
+        "http://*.google.com/*",
+        "https://*.google.com/*",
+        "https://www.google.com/",
+        "http://*/*",
+        "https://*/*",
+        "file://*/*"
+      ],
+      "css": [
+        "css/tab.css"
+      ],
+      "__css_comment": "These are injected in the order they appear in this array, before any DOM is constructed or displayed for the page.",
+
+      "js": [
+        "js/jquery-1.8.1.min.js",
+        "js/tab.js"
+      ],
+      "run_at": "document_start",
+      "__js_comment": "In the case of 'document_end', the files are injected immediately after the DOM is complete, but before subresources like images and frames have loaded. In the case of 'document_start', the files are injected after any files from css, but before any other DOM is constructed or any other script is run.",
+
+      "all_frames": true
+    }
+  ],
+
+  "browser_action": {
+    "name": "Show plain text",
+    "default_title": "Set this page Text Mode",
+    
+    "default_icon": "imgs/icon.png",
+    "icons": [
+      "imgs/icon.png"
+    ],
+
+    "__default_popup_comment": "Commenting the popup since we don't need it for now",
+    "__default_popup": "html/popup.html"
+
+  },
+  
+  "web_accessible_resources": [
+    "imgs/bg_blank_1px.png",
+    "imgs/bg_lines_01.png",
+    "imgs/bg_lines_02.png",
+    "imgs/bg_lines_03.png",
+    "imgs/bg_lines_03_grey.png",
+    "imgs/bg_lines_04.png"
+  ]
+}
