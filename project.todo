@@ -4,12 +4,18 @@
 - UI
 	+ icon
 	+ on/off button state
+	- replace favicon
 - DOM
 	+ image replacement
-	- font substitution
-	- skip js
-	- skip loading of assets (imgs, obj, fonts, etc)
-	- detect DOM changes (ajax, etc)
+	- skip loading of assets 
+		+ imgs
+		+ obj
+		+ iframes
+		- fonts
+		- other
+	- ? font substitution
+	- ? skip js
+	+ detect DOM changes (ajax, etc)
 - Settings
 	- enable / disable JS ? default=false
 	- enable / disable CSS ? default=false

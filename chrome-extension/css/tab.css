@@ -22,7 +22,11 @@
 	-webkit-filter: grayscale(100%);
 }
 
-.__plain_text__ img
+.__plain_text__ img,
+.__plain_text__ canvas,
+.__plain_text__ video,
+.__plain_text__ object,
+.__plain_text__ iframe
 {
 	/*
 		We can't use JS here to do something like this:
