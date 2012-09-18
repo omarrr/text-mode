@@ -74,14 +74,22 @@ function setBodyType() {
 	}
 }
 
+//------------------------------------------------
+// BLOCK FAVICON
+// Disabled since with this technique the
+// favicons in the bookmarks also change
+// and we don't want that.
+// Need to find a better solution
+//------------------------------------------------
 function setFavicon() {
+	return; // << Read above
 
 	var head = document.getElementsByTagName("head")[0];
 
 	if(head && isEnabled) {
 
 		// FROM: http://userscripts.org/scripts/review/42247
-		
+
 		(function(d, h) {
 		// Create this favicon
 		var ss = d.createElement('link');
@@ -112,7 +120,6 @@ function setFavicon() {
 		})(document, head);
 
 	}
-
 
 }
 
