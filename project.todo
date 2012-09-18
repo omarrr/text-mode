@@ -4,7 +4,7 @@
 - UI
 	+ icon
 	+ on/off button state
-	- replace favicon
+	- replace favicon without changing the DOM so that bookmarks remain as they are
 - DOM
 	+ image replacement
 	- skip loading of assets 
@@ -16,11 +16,11 @@
 	- ? font substitution
 	- ? skip js
 	+ detect DOM changes (ajax, etc)
+- QA
+	- fix initial page load flash
+		- test on: http://money.cnn.com/ << takes forever to load
+	+ fix GMAIL
 - Settings
 	- enable / disable JS ? default=false
 	- enable / disable CSS ? default=false
 	- enable / disable IMGs; default=true
-- QA
-	- test on: http://money.cnn.com/ << takes forever to load
-	- fix initial page load flash
-	+ fix GMAIL

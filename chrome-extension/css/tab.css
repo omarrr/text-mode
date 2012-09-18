@@ -19,6 +19,8 @@
 	/*background-color: red !important;*/
 	background-color: #eee !important;
 	-webkit-filter: grayscale(100%) !important;
+/*	-webkit-filter: contrast(200%) !important;*/
+/*	-webkit-filter: saturate(200%) sepia(100%) hue-rotate(180deg) !important;*/
 }
 
 .__plain_text__ img,

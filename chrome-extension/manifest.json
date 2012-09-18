@@ -1,8 +1,8 @@
 {
-  "name": "Plain Text",
+  "name": "Text Mode",
   "version": "0.1",
   "manifest_version": 2,
-  "description": "Renders clean simple text based pages",
+  "description": "Renders clean simple text based pages.",
 
   "permissions": [
     "tabs",
@@ -21,11 +21,6 @@
   "content_scripts": [
     {
       "matches": [
-        "http://*.nytimes.com/*",
-        "http://*.amazon.com/*",
-        "http://*.google.com/*",
-        "https://*.google.com/*",
-        "https://www.google.com/",
         "http://*/*",
         "https://*/*",
         "file://*/*"
@@ -47,8 +42,8 @@
   ],
 
   "browser_action": {
-    "name": "Show plain text",
-    "default_title": "Set this page Text Mode",
+    "name": "Text Mode",
+    "default_title": "Set Text Mode on/off",
 
     "default_icon": "imgs/icon.png",
     "icons": [
