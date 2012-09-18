@@ -36,7 +36,7 @@
       "__css_comment": "These are injected in the order they appear in this array, before any DOM is constructed or displayed for the page.",
 
       "js": [
-        "js/jquery-1.8.1.min.js",
+        "js/parseuri.js",
         "js/tab.js"
       ],
       "run_at": "document_start",
@@ -49,7 +49,7 @@
   "browser_action": {
     "name": "Show plain text",
     "default_title": "Set this page Text Mode",
-    
+
     "default_icon": "imgs/icon.png",
     "icons": [
       "imgs/icon.png"
@@ -66,6 +66,7 @@
     "imgs/bg_lines_02.png",
     "imgs/bg_lines_03.png",
     "imgs/bg_lines_03_grey.png",
-    "imgs/bg_lines_04.png"
+    "imgs/bg_lines_04.png",
+    "imgs/favicon.ico"
   ]
 }

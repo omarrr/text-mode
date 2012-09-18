@@ -11,7 +11,7 @@
 		+ imgs
 		+ obj
 		+ iframes
-		- fonts
+		+ Not needed >> fonts
 		- other
 	- ? font substitution
 	- ? skip js
@@ -23,3 +23,4 @@
 - QA
 	- test on: http://money.cnn.com/ << takes forever to load
 	- fix initial page load flash
+	+ fix GMAIL
