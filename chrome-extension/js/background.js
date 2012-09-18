@@ -188,7 +188,10 @@ function setListeners(){
 				// Possible values:
 				// "main_frame", "sub_frame", "stylesheet", "script",
 				// "image", "object", "xmlhttprequest", "other"
-				types: ["sub_frame", "object"]
+
+				// Gmail breaks if we block IFRAMES so we block at TAB level (in tab.js)
+				//types: ["sub_frame", "object"]
+				types: ["object"]
 			},
 			// extraInfoSpec
 			["blocking"]

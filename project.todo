@@ -4,23 +4,27 @@
 - UI
 	+ icon
 	+ on/off button state
-	- replace favicon
+	- replace favicon without changing the DOM so that bookmarks remain as they are
 - DOM
 	+ image replacement
+	- rethink replace BG images
+		- if DOM element is large >> Replce
+		- if DOM element is small >> most likely a UI item >> Keep
 	- skip loading of assets 
 		+ imgs
 		+ obj
 		+ iframes
-		- fonts
+		+ Not needed >> fonts
 		- other
 	- ? font substitution
 	- ? skip js
 	+ detect DOM changes (ajax, etc)
+- QA
+	- fix initial page load flash
+		- test on: http://money.cnn.com/ << takes forever to load
+	+ fix GMAIL
+	- fix images with data: <img src="data:image/jpeg;base64,/9j/ ... /2Q==" alt="" align="middle" border="0" height="87" id="vidthumb3" class="th vidthumb3" style="margin:0px 0px 0px 0px;border:0" width="116">
 - Settings
 	- enable / disable JS ? default=false
 	- enable / disable CSS ? default=false
 	- enable / disable IMGs; default=true
-- QA
-	- test on: http://money.cnn.com/ << takes forever to load
-	- fix initial page load flash
-	- fix images with data: <img src="data:image/jpeg;base64,/9j/ ... /2Q==" alt="" align="middle" border="0" height="87" id="vidthumb3" class="th vidthumb3" style="margin:0px 0px 0px 0px;border:0" width="116">
