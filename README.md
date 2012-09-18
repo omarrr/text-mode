@@ -17,4 +17,5 @@ plain-text
 	* [dataset API](http://davidwalsh.name/element-dataset)
 	* [beforeload event listener](http://stackoverflow.com/questions/11837944/change-a-img-src-in-chrome-extension-before-the-image-has-loaded)
 	* [Image to Base64 Converter](http://webcodertools.com/imagetobase64converter/Create)
+	* [parseUri](http://stevenlevithan.com/demo/parseuri/js/) Split URLs in JavaScript
 

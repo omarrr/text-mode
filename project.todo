@@ -7,6 +7,9 @@
 	- replace favicon without changing the DOM so that bookmarks remain as they are
 - DOM
 	+ image replacement
+	- rethink replace BG images
+		- if DOM element is large >> Replce
+		- if DOM element is small >> most likely a UI item >> Keep
 	- skip loading of assets 
 		+ imgs
 		+ obj
