@@ -12,6 +12,7 @@ plain-text
 	* [Chrome's webRequest](http://developer.chrome.com/extensions/webRequest.html)
 	* [Chrome's Message Passing](http://developer.chrome.com/extensions/messaging.html)
 
+
 * Other
 	* [dataset API](http://davidwalsh.name/element-dataset)
 	* [beforeload event listener](http://stackoverflow.com/questions/11837944/change-a-img-src-in-chrome-extension-before-the-image-has-loaded)
