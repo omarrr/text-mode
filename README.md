@@ -1,20 +1,24 @@
-plain-text
+Text Mode
 ==========
 
-Browse the web without distractions via clean simple text based pages.
+Text Mode is a Chrome extension that allows to browse the web without distractions via clean simple text based pages.
 
-Declutter your web surfing by activating Text Mode. All pages load in text form (no images, animation or video) so content is easier to scan and read. 
+![Text Mode](https://raw.github.com/omarrr/plain-text/master/assets/icons/icon_128x128.png)
 
-★ View text only pages
-★ Images, Video, flash, are never loaded
-★ Color-free pages are easier on the eye
-★ Reduce pages load
-★ One-click easy access
-★ Removes 99% of the ads with no extra software
+TM declutters the web by loading all pages in text form (no images, animation or video) so content is easier to scan and read. 
+
+* View text only pages
+* Images, Video, flash, are never loaded
+* Color-free pages are easier on the eye
+* Reduce pages load
+* One-click easy access
+* Removes 99% of the ads with no extra software
+
+![Screenshot](https://raw.github.com/omarrr/plain-text/master/assets/screenshots/screenshot_04.jpg)
 
 ## Chrome web store
 
-[Text Mode](https://chrome.google.com/webstore/detail/adelhekhakakocomdfejiipdnaadiiib/) at the Chrome web store.
+[Text Mode](https://chrome.google.com/webstore/detail/adelhekhakakocomdfejiipdnaadiiib/) is available at the Chrome web store.
 
 ## Resources:
 
