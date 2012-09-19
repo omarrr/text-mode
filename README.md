@@ -1,6 +1,20 @@
 plain-text
 ==========
 
+Browse the web without distractions via clean simple text based pages.
+
+Declutter your web surfing by activating Text Mode. All pages load in text form (no images, animation or video) so content is easier to scan and read. 
+
+★ View text only pages
+★ Images, Video, flash, are never loaded
+★ Color-free pages are easier on the eye
+★ Reduce pages load
+★ One-click easy access
+★ Removes 99% of the ads with no extra software
+
+## Chrome web store
+
+[Text Mode](https://chrome.google.com/webstore/detail/adelhekhakakocomdfejiipdnaadiiib/) at the Chrome web store.
 
 ## Resources:
 
