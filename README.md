@@ -3,7 +3,7 @@ Text Mode
 
 Text Mode is a Chrome extension that allows to browse the web without distractions via clean simple text based pages.
 
-![Text Mode](https://raw.github.com/omarrr/plain-text/master/assets/icons/icon_128x128.png)
+![Text Mode](https://raw.github.com/omarrr/text-mode/master/assets/icons/icon_128x128.png)
 
 TM declutters the web by loading all pages in text form (no images, animation or video) so content is easier to scan and read. 
 
@@ -14,7 +14,7 @@ TM declutters the web by loading all pages in text form (no images, animation or
 * One-click easy access
 * Removes 99% of the ads with no extra software
 
-![Screenshot](https://raw.github.com/omarrr/plain-text/master/assets/screenshots/screenshot_04.jpg)
+![Screenshot](https://raw.github.com/omarrr/text-mode/master/assets/screenshots/screenshot_04.jpg)
 
 ## Chrome web store
 
