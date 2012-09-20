@@ -23,7 +23,8 @@
 	- fix initial page load flash
 		- test on: http://money.cnn.com/ << takes forever to load
 	+ fix GMAIL
-	- fix images with data: <img src="data:image/jpeg;base64,/9j/ ... /2Q==" alt="" align="middle" border="0" height="87" id="vidthumb3" class="th vidthumb3" style="margin:0px 0px 0px 0px;border:0" width="116">
+	- fix images with data (eg. google results)
+		Eg: <img src="data:image/jpeg;base64,/9j/ ... /2Q==" alt="" align="middle" border="0" height="87" id="vidthumb3" class="th vidthumb3" style="margin:0px 0px 0px 0px;border:0" width="116">
 - Settings
 	- enable / disable JS ? default=false
 	- enable / disable CSS ? default=false
