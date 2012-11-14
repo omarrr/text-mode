@@ -37,3 +37,11 @@ TM declutters the web by loading all pages in text form (no images, animation or
 	* [Image to Base64 Converter](http://webcodertools.com/imagetobase64converter/Create)
 	* [parseUri](http://stevenlevithan.com/demo/parseuri/js/) Split URLs in JavaScript
 
+## Development process
+
+* Disable production version of TextMode if enabled from the Chrome Store
+* Edit files locally
+	* Update version # in 'manifest.json' 
+* Visit locally 'chrome://chrome/extensions/'
+* Select the 'chrome-extension' folder w/ 'Load unpacked extension'
+* Reload extension with every code update via 'Reload (⌘R)'

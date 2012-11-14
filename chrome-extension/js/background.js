@@ -109,12 +109,12 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 // Sets the listeners only if the extension is enabled for the current context
 		onBeforeRequestImage = function(info)
 		{
-			console.log("IMG intercepted: " + info.url);
+			//console.log("IMG intercepted: " + info.url);
 			// Redirect the image request to blank.
 			return {redirectUrl: chrome.extension.getURL("imgs/bg_blank_1px.png")};
 		};
 		onBeforeRequestObject = function(info) {
-			console.log("IMG intercepted: " + info.url);
+			//console.log("IMG intercepted: " + info.url);
 
 			// Canceling the request shows an ugly Chrome message
 			//return {cancel:true};

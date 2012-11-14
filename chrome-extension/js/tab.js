@@ -19,7 +19,7 @@
 	isEnabled = false;
 	//enableAll = false; // Enabled on all domains
 	function getMode(response) {
-		console.log("getMode");
+		//console.log("getMode");
 		var enableAll = (response.enableAll === "true");
 
 		isEnabled = enableAll;
@@ -32,7 +32,7 @@
 // Get BODY tag
 	domReady = false;
 	function onReady() {
-		console.log("onReady");
+		//console.log("onReady");
 		domReady = true;
 
 		this.setBodyType();
@@ -149,7 +149,7 @@ function setFavicon() {
 			event.srcElement.tagName == "IMG" )//&&
 			//event.srcElement.src.endsWith('/test.png'))
 		{
-				// If it is something we want to redirect then set a data attribute so we know its allready been changed
+				// If it is something we want to redirect then set a data attribute so we know its already been changed
 				// Set that attribute to it original src in case we need to know what it was later
 				event.srcElement.dataset['redirected'] = event.srcElement.src;
 				// Set the source to the new url you want the element to point to
