@@ -39,9 +39,15 @@ TM declutters the web by loading all pages in text form (no images, animation or
 
 ## Development process
 
-* Disable production version of TextMode if enabled from the Chrome Store
-* Edit files locally
+* Development
+	* Disable production version of TextMode if enabled from the Chrome Store
+	* Edit files locally
 	* Update version # in 'manifest.json' 
-* Visit locally 'chrome://chrome/extensions/'
-* Select the 'chrome-extension' folder w/ 'Load unpacked extension'
-* Reload extension with every code update via 'Reload (⌘R)'
+* Local test
+	* Visit locally 'chrome://chrome/extensions/'
+	* Select the 'chrome-extension' folder w/ 'Load unpacked extension'
+	* Reload extension with every code update via 'Reload (⌘R)'
+* Deployment to Chrome Store
+	* ZIP the 'chrome-extension' folder
+	* Upload to the developer dashboard: [https://chrome.google.com/webstore/developer/](https://chrome.google.com/webstore/developer/)
+	* More details at [Publishing Your App](https://developers.google.com/chrome/web-store/docs/publish)
