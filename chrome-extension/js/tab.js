@@ -7,8 +7,10 @@
 	Runs on the Page context
 	Is fired with each page refresh
 
-*************************************************/
+	Communication
+		* Background.js <-> Tab.js		via Message Passing (http://developer.chrome.com/extensions/messaging.html)
 
+*************************************************/
 
 //------------------------------------------------
 // PAGE >> POPUP
@@ -16,27 +18,45 @@
 //------------------------------------------------
 
 // Get Preferences from the Extension
-	isEnabled = false;
-	//enableAll = false; // Enabled on all domains
-	function getMode(response) {
-		//console.log("getMode");
-		var enableAll = (response.enableAll === "true");
+	var isEnabled = false;
+	var replacementImageID = 0;
 
-		isEnabled = enableAll;
+	function getMode(response) {
+		// console.log(response);
+
+		isEnabled = (response.enableAll === "true");
+		replacementImageID = response.replacementImageID;
+		isDesaturated = (response.isDesaturated === "true");
+		useWhiteBg = (response.useWhiteBg === "true");
 
 		this.setBodyType();
 		this.setFavicon();
 	}
 	chrome.extension.sendMessage({method: "getMode", refresh: true}, this.getMode);
 
+//Images
+var img_url = "imgs/bg/bg_%ID%.png";
+function getBlankImg(){
+	return chrome.extension.getURL("imgs/bg/bg_blank_1px.png");
+	// return chrome.extension.getURL("imgs/bg/bg_grey_1px.png");
+}
+function getBgImg(){
+	img_curr = img_url.replace("%ID%", replacementImageID);
+
+	return chrome.extension.getURL(img_curr);
+}
+
 // Get BODY tag
 	domReady = false;
 	function onReady() {
-		//console.log("onReady");
+		console.log("onReady");
+
 		domReady = true;
 
 		this.setBodyType();
 		this.setFavicon();
+		this.replaceHolderImgs();
+
 	}
 	window.addEventListener('DOMContentLoaded', onReady, false);
 
@@ -47,8 +67,16 @@
 //	- settings from the Extension (sendMessage)
 //	- <BODY> tag to be ready
 //------------------------------------------------
-var body_class_plain_text = "__plain_text__";
 var body_class_ready = "__plain_text_READY__";
+var body_class_whitelisted = "__plain_text_whitelisted__";
+var body_class_plain_text = "__plain_text__";
+
+var body_class_text_mode_img = "__text_mode_img_%ID%__";
+var body_class_text_mode_img_curr = "";
+
+var body_class_text_mode_white_bg = "__text_mode_white_bg__";
+var body_class_text_mode_desaturated = "__text_mode_desaturated__";
+
 function setBodyType() {
 	/*
 	var body = null;
@@ -58,18 +86,33 @@ function setBodyType() {
 		body = bodies[0];
 	*/
 	var body = document.getElementsByTagName("body")[0];
+	body_class_text_mode_img_curr = body_class_text_mode_img.replace("%ID%", replacementImageID);
 
 	if(body) {
-		if (body.className.indexOf(body_class_ready) < 0)
-			body.className += " " + body_class_ready;
+		// If the page is not whitelisted (now only options.html)
+		if (body.className.indexOf(body_class_whitelisted) < 0)
+		{
+			if (body.className.indexOf(body_class_ready) < 0)
+				body.className += " " + body_class_ready;
 
-		if (isEnabled) {
-			//var body = document.getElementsByTagName("body")[0];
-			//var bodies = document.getElementsByTagName("body"); // << I've never seen a DOM with more than one body but that doesn't mean they don't exist :!
-			//if (bodies && bodies.length > 0) {
-				//body = bodies[0];
+			if (isEnabled) {
 				if (body.className.indexOf(body_class_plain_text) < 0)
 					body.className += " " + body_class_plain_text;
+
+				// CSS: Image Replacement
+				if (body.className.indexOf(body_class_text_mode_img_curr) < 0)
+					body.className += " " + body_class_text_mode_img_curr;
+
+				// CSS: Desaturated
+				if (isDesaturated)
+					if (body.className.indexOf(body_class_text_mode_desaturated) < 0)
+						body.className += " " + body_class_text_mode_desaturated;
+
+				// CSS: White Bg
+				if (useWhiteBg)
+					if (body.className.indexOf(body_class_text_mode_white_bg) < 0)
+						body.className += " " + body_class_text_mode_white_bg;
+			}
 		}
 	}
 }
@@ -121,6 +164,27 @@ function setFavicon() {
 
 	}
 
+}
+
+//------------------------------------------------
+// Holder.js
+//------------------------------------------------
+function replaceHolderImgs()
+{
+	if(isEnabled 
+		&&
+		(replacementImageID === 0) ) 
+	{
+		var holderImg = "holder.js/%W%x%H%";
+		var holderBgImg = "url(?holder.js/%W%x%H%/social) no-repeat";
+		var imgs = document.getElementsByTagName('img');
+		for (var i=0; i<imgs.length; i++) {
+			//imgs[i].src = holderImg.split("%W%").join(imgs[i].width).split("%H%").join(imgs[i].height);
+			imgs[i].src = "";
+			imgs[i].css("background", holderBgImg.split("%W%").join(imgs[i].width).split("%H%").join(imgs[i].height));
+		}
+		Holder.run();		
+	}
 }
 
 //$("img").css("backgroundImage", url('"+chrome.extension.getURL("imgs/bg_lines_03_grey.png")+"');
@@ -197,10 +261,16 @@ function setFavicon() {
 				event.srcElement.dataset['redirected'] = event.srcElement.src;
 				// Set the source to the new url you want the element to point to
 				// event.srcElement.src = "replacement.png";
-				event.srcElement.src = chrome.extension.getURL("imgs/bg_blank_1px.png");
+
+				//event.srcElement.src = chrome.extension.getURL("imgs/bg_blank_1px.png");
+				event.srcElement.src = getBlankImg();
+
 
 				//event.srcElement.src = chrome.extension.getURL("imgs/bg_blank.png");
-				event.srcElement.style.backgroundImage = "url('"+chrome.extension.getURL("imgs/bg_lines_03_grey.png")+"')";
+				// event.srcElement.style.backgroundImage = "url('"+chrome.extension.getURL("imgs/bg_lines_03_grey.png")+"')";
+				
+				//event.srcElement.style.backgroundImage = "url('"+chrome.extension.getURL("imgs/bg_lines_08.png")+"')";
+				event.srcElement.style.backgroundImage = "url('"+getBgImg()+"')";
 		}
 	}
 

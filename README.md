@@ -44,7 +44,7 @@ TM declutters the web by loading all pages in text form (no images, animation or
 	* Edit files locally
 	* Update version # in 'manifest.json' 
 * Local test
-	* Visit locally 'chrome://chrome/extensions/'
+	* Visit locally 'chrome://extensions/'
 	* Select the 'chrome-extension' folder w/ 'Load unpacked extension'
 	* Reload extension with every code update via 'Reload (⌘R)'
 * Deployment to Chrome Store

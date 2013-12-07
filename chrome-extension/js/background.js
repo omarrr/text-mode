@@ -7,6 +7,10 @@
 	It runs in the context of the extension (not the page)
 	Is fired when the extension loads and it's always running
 
+	Communication
+		* Background.js <-> Options.js	via localStorage
+		* Background.js <-> Tab.js		via Message Passing (http://developer.chrome.com/extensions/messaging.html)
+
 *************************************************/
 
 //------------------------------------------------
@@ -59,6 +63,7 @@ function updateUI() {
 function refreshTab(tabId) {
 	chrome.tabs.reload(tabId);
 }
+
 //------------------------------------------------
 // MODE
 //------------------------------------------------
@@ -76,11 +81,54 @@ function toggleIsEnableAll()
 	return setIsEnableAll(!getIsEnableAll());
 }
 
-//var isEnabled = false;
-//var enableAll = localStorage['enable_all'] === "true";
-//var enableAll = getIsEnableAll();
-//alert(enableAll);
-//	isEnabled = enableAll;
+//------------------------------------------------
+// Desaturation
+//------------------------------------------------
+function getIsDesaturated() {
+	// return localStorage['is_desaturated'] === "true";
+	return !(localStorage['is_desaturated'] === "false");
+}
+
+//------------------------------------------------
+// White BG
+//------------------------------------------------
+function getUseWhiteBg() {
+	return !(localStorage['use_white_bg'] === "false");
+}
+
+//------------------------------------------------
+// Replacement Image
+//------------------------------------------------
+function getReplacementImageID() {
+	// Get image # to use
+	var currImageReplacementDefault = 0;
+	var currImageReplacementID = localStorage["replacement_image"] || currImageReplacementDefault;
+
+	// console.log("currImageReplacementID: "+currImageReplacementID);
+
+	return currImageReplacementID;
+}
+function getReplacementImage() {
+	// Get image # to use
+	var currImageReplacementID = getReplacementImageID();
+	// Get image URL
+	var currImageReplacement = chrome.extension.getURL("imgs/bg/bg_"+currImageReplacementID+".png");
+
+	// console.log("currImageReplacement: "+currImageReplacement);
+
+	return currImageReplacement;
+}
+function getBlankReplacementImage() {
+	// Get image # to use
+	var imageReplacementID = 1;
+	// Get image URL
+	// var imageReplacement = chrome.extension.getURL("imgs/bg/bg_blank_1px.png");
+	var imageReplacement = chrome.extension.getURL("imgs/bg/bg_grey_1px.png");
+
+	// console.log("imageReplacement: "+imageReplacement);
+
+	return imageReplacement;
+}
 
 //------------------------------------------------
 // POPUP >> PAGE
@@ -93,6 +141,9 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.method === "getMode"){
       //response.enableAll = localStorage['enable_all'];
       response.enableAll = getIsEnableAll().toString();
+      response.replacementImageID = getReplacementImageID().toString();
+      response.isDesaturated = getIsDesaturated().toString();
+      response.useWhiteBg = getUseWhiteBg().toString();
 	}
     if (request.refresh === "true"){
 		setListeners();
@@ -103,52 +154,40 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 //------------------------------------------------
-// Avoid loading IMGs, IFRAMEs and OBJECTs
+// Avoid loading IMGs and OBJECTs
+//		(We let IFRAMEs through since they break if blocked this way)
 //------------------------------------------------
 
-// Sets the listeners only if the extension is enabled for the current context
 		onBeforeRequestImage = function(info)
 		{
 			//console.log("IMG intercepted: " + info.url);
+
 			// Redirect the image request to blank.
-			return {redirectUrl: chrome.extension.getURL("imgs/bg_blank_1px.png")};
+			// return {redirectUrl: chrome.extension.getURL("imgs/bg/bg_blank_1px.png")};
+			return {redirectUrl: getBlankReplacementImage()};
+			// return {redirectUrl: getReplacementImage()};
 		};
 		onBeforeRequestObject = function(info) {
-			//console.log("IMG intercepted: " + info.url);
+			// console.log("IMG intercepted: " + info.url);
 
 			// Canceling the request shows an ugly Chrome message
 			//return {cancel:true};
 
-			// Redirect the asset request to ////.
-			return {redirectUrl: chrome.extension.getURL("imgs/bg_lines_03_grey.png")};
+			// Redirect the asset request to ////.  /. 
+			// return {redirectUrl: chrome.extension.getURL("imgs/bg/bg_3.png")};
+			return {redirectUrl: getReplacementImage()};
 		};
-function setListeners(){
+function setListeners() {
 	var isEnabled = getIsEnableAll();
 
-	if (!isEnabled)
+	if (isEnabled
+		&&
+		(getReplacementImageID() > 0) )
 	{
-		chrome.webRequest.onBeforeRequest.removeListener(
-			onBeforeRequestImage
-			);
-		chrome.webRequest.onBeforeRequest.removeListener(
-			onBeforeRequestObject
-			);
-	}
-	else
-	//if (isEnabled)
-	//if(1)
-	{
-		//alert("setListeners");
-
+		// Sets the listeners only if the extension is enabled for the current context
 		chrome.webRequest.onBeforeRequest.addListener(
+			// listener
 			onBeforeRequestImage,
-					
-			//		function(info) {
-			//			console.log("IMG intercepted: " + info.url);
-			//			// Redirect the image request to blank.
-			//			return {redirectUrl: chrome.extension.getURL("imgs/bg_blank_1px.png")};
-			//		},
-					
 			// filters
 			{
 				urls: [
@@ -164,20 +203,9 @@ function setListeners(){
 			// extraInfoSpec
 			["blocking"]
 		);
-
 		chrome.webRequest.onBeforeRequest.addListener(
+			// listener
 			onBeforeRequestObject,
-					/*
-					function(info) {
-						console.log("IMG intercepted: " + info.url);
-
-						// Canceling the request shows an ugly Chrome message
-						//return {cancel:true};
-
-						// Redirect the asset request to ////.
-						return {redirectUrl: chrome.extension.getURL("imgs/bg_lines_03_grey.png")};
-					},
-					*/
 			// filters
 			{
 				urls: [
@@ -185,20 +213,24 @@ function setListeners(){
 					"https://*/*"
 				],
 
-				// Possible values:
-				// "main_frame", "sub_frame", "stylesheet", "script",
-				// "image", "object", "xmlhttprequest", "other"
-
 				// Gmail breaks if we block IFRAMES so we block at TAB level (in tab.js)
 				//types: ["sub_frame", "object"]
-				types: ["object"]
+				types: ["object"] 
+					// Possible values:
+					// "main_frame", "sub_frame", "stylesheet", "script",
+					// "image", "object", "xmlhttprequest", "other"
 			},
 			// extraInfoSpec
 			["blocking"]
 		);
-
 	}
-
+	else
+	{
+		// Remove listeners
+		chrome.webRequest.onBeforeRequest.removeListener( onBeforeRequestImage );
+		chrome.webRequest.onBeforeRequest.removeListener( onBeforeRequestObject );
+	}
 }
+
 setListeners();
 updateUI();

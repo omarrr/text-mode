@@ -1,6 +1,6 @@
 {
   "name": "Text Mode",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "manifest_version": 2,
   "description": "Browse the web without distractions via simple text based pages.",
 
@@ -18,6 +18,8 @@
     "https://*/*"
   ],
 
+  "options_page": "html/options.html",
+
   "background": {
     "scripts": [
       "js/background.js"
@@ -31,13 +33,16 @@
         "https://*/*",
         "file://*/*"
       ],
+
       "css": [
         "css/tab.css"
       ],
       "__css_comment": "These are injected in the order they appear in this array, before any DOM is constructed or displayed for the page.",
 
       "js": [
-        "js/parseuri.js",
+        "js/vendor/parseuri.js",
+        "js/vendor/holder-2.2.min.js",
+        "js/vendor/holder.js",
         "js/tab.js"
       ],
       "run_at": "document_start",
@@ -62,12 +67,22 @@
   },
   
   "web_accessible_resources": [
-    "imgs/bg_blank_1px.png",
-    "imgs/bg_lines_01.png",
-    "imgs/bg_lines_02.png",
-    "imgs/bg_lines_03.png",
-    "imgs/bg_lines_03_grey.png",
-    "imgs/bg_lines_04.png",
-    "imgs/favicon.ico"
+    "imgs/bg/bg_blank_1px.png",
+    "imgs/bg/bg_grey_1px.png",
+
+    "imgs/bg/bg_1.png",
+    "imgs/bg/bg_2.png",
+    "imgs/bg/bg_3.png",
+    "imgs/bg/bg_4.png"
+
+    // "imgs/bg_lines_01.png",
+    // "imgs/bg_lines_02.png",
+    // "imgs/bg_lines_03.png",
+    // "imgs/bg_lines_03_grey.png",
+    // "imgs/bg_lines_04.png",
+    // "imgs/bg_lines_05.png",
+    // "imgs/bg_lines_08.png",
+    // "imgs/bg_lines_09.png",
+    // "imgs/favicon.ico"
   ]
 }
