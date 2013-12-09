@@ -36,6 +36,7 @@ TM declutters the web by loading all pages in text form (no images, animation or
 	* [beforeload event listener](http://stackoverflow.com/questions/11837944/change-a-img-src-in-chrome-extension-before-the-image-has-loaded)
 	* [Image to Base64 Converter](http://webcodertools.com/imagetobase64converter/Create)
 	* [parseUri](http://stevenlevithan.com/demo/parseuri/js/) Split URLs in JavaScript
+	* [Holder.js](http://imsky.github.io/holder/) image placeholders entirely on the client side
 
 ## Development process
 
