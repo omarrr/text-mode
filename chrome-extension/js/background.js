@@ -9,63 +9,55 @@
 
 	Communication
 		* Background.js <-> Options.js	via localStorage
-		* Background.js <-> Tab.js		via Message Passing (http://developer.chrome.com/extensions/messaging.html)
+		* Background.js <-> Tab.js		via Message Passing 
+										(http://developer.chrome.com/extensions/messaging.html)
 
 *************************************************/
 
 //------------------------------------------------
-// UI
+// UI [T] Button
 //------------------------------------------------
+var iconOn = "../imgs/iconOn.png";
+var iconOff = "../imgs/iconOff.png";
 
-	//var textMode = false;
-	var iconOn = "../imgs/iconOn.png";
-	var iconOff = "../imgs/iconOff.png";
+// Called when the user clicks on the browser action.
+chrome.browserAction.onClicked.addListener(function(tab) {
 
-	// Called when the user clicks on the browser action.
-	chrome.browserAction.onClicked.addListener(function(tab) {
+	toggleIsEnableAll();
 
-		//alert("click: "+getIsEnableAll());
-		//textMode = !textMode;
+	setListeners();
+	updateUI();
+	refreshTab(tab.id);
 
-		toggleIsEnableAll();
+		// chrome.tabs.executeScript(
+		// 	tab.id,
+		// 	// {code:"document.body.style.background='red !important'"},
+		// 	{code:"-webkit-filter: grayscale(100%) !important;"},
+		// 	null
+		// 	);
+		// chrome.tabs[tab.id].insertCSS(
+		// 	tab.id,
+		// 	// {code:"document.body.style.background='red !important'"},
+		// 	{code:"body {-webkit-filter: grayscale(100%) !important;}"},
+		// 	null
+		// 	);
+});
 
-		setListeners();
-		updateUI();
-		refreshTab(tab.id);
-		//chrome.tabs.reload(tab.id);
-
-		/*
-		chrome.tabs.executeScript(
-			tab.id,
-			{code:"document.body.style.background='red !important'"},
-			null
-			);
-		*/
-		/*
-			chrome.tabs[tab].executeScript(
-				null,
-				{code:"document.body.style.background='red !important'"}
-			);
-			//chrome.tabs[tab].executeScript(
-			//	null,
-			//	{code:"document.body.style.background='red !important'"}
-			//);
-		*/
-
-	});
 function updateUI() {
 	var isEnabled = getIsEnableAll();
-
-	//alert("updateUI.isEnabled: "+isEnabled);
 	var iconCurr = isEnabled ? iconOn : iconOff;
 	chrome.browserAction.setIcon({path:iconCurr});
 }
+
+//------------------------------------------------
+// Refresh
+//------------------------------------------------
 function refreshTab(tabId) {
 	chrome.tabs.reload(tabId);
 }
 
 //------------------------------------------------
-// MODE
+// ENABLE Mode
 //------------------------------------------------
 function getIsEnableAll()
 {
@@ -85,7 +77,6 @@ function toggleIsEnableAll()
 // Desaturation
 //------------------------------------------------
 function getIsDesaturated() {
-	// return localStorage['is_desaturated'] === "true";
 	return !(localStorage['is_desaturated'] === "false");
 }
 
@@ -100,32 +91,19 @@ function getUseWhiteBg() {
 // Replacement Image
 //------------------------------------------------
 function getReplacementImageID() {
-	// Get image # to use
-	var currImageReplacementDefault = 0;
+	var currImageReplacementDefault = 1;
 	var currImageReplacementID = localStorage["replacement_image"] || currImageReplacementDefault;
-
-	// console.log("currImageReplacementID: "+currImageReplacementID);
 
 	return currImageReplacementID;
 }
 function getReplacementImage() {
-	// Get image # to use
 	var currImageReplacementID = getReplacementImageID();
-	// Get image URL
 	var currImageReplacement = chrome.extension.getURL("imgs/bg/bg_"+currImageReplacementID+".png");
-
-	// console.log("currImageReplacement: "+currImageReplacement);
 
 	return currImageReplacement;
 }
 function getBlankReplacementImage() {
-	// Get image # to use
-	var imageReplacementID = 1;
-	// Get image URL
-	// var imageReplacement = chrome.extension.getURL("imgs/bg/bg_blank_1px.png");
-	var imageReplacement = chrome.extension.getURL("imgs/bg/bg_grey_1px.png");
-
-	// console.log("imageReplacement: "+imageReplacement);
+	var imageReplacement = chrome.extension.getURL("imgs/bg/bg_blank_1px.png");
 
 	return imageReplacement;
 }
@@ -138,14 +116,13 @@ function getBlankReplacementImage() {
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	var response = {};
 
-    if (request.method === "getMode"){
-      //response.enableAll = localStorage['enable_all'];
-      response.enableAll = getIsEnableAll().toString();
-      response.replacementImageID = getReplacementImageID().toString();
-      response.isDesaturated = getIsDesaturated().toString();
-      response.useWhiteBg = getUseWhiteBg().toString();
+	if (request.method === "getMode"){
+		response.enableAll = getIsEnableAll().toString();
+		response.replacementImageID = getReplacementImageID().toString();
+		response.isDesaturated = getIsDesaturated().toString();
+		response.useWhiteBg = getUseWhiteBg().toString();
 	}
-    if (request.refresh === "true"){
+	if (request.refresh === "true"){
 		setListeners();
 		updateUI();
 	}
@@ -158,31 +135,33 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 //		(We let IFRAMEs through since they break if blocked this way)
 //------------------------------------------------
 
-		onBeforeRequestImage = function(info)
-		{
-			//console.log("IMG intercepted: " + info.url);
+//------------------------------------------------
+// Listeners
 
-			// Redirect the image request to blank.
-			// return {redirectUrl: chrome.extension.getURL("imgs/bg/bg_blank_1px.png")};
-			return {redirectUrl: getBlankReplacementImage()};
-			// return {redirectUrl: getReplacementImage()};
-		};
-		onBeforeRequestObject = function(info) {
-			// console.log("IMG intercepted: " + info.url);
+	onBeforeRequestImage = function(info)
+	{
+		// Redirect the image request to blank.
+		return {redirectUrl: getBlankReplacementImage()};
+	};
+	onBeforeRequestObject = function(info) {
+		// Canceling the request shows an ugly Chrome message
+		//return {cancel:true};
 
-			// Canceling the request shows an ugly Chrome message
-			//return {cancel:true};
+		// Redirect the asset request to ////
+		return {redirectUrl: getReplacementImage()};
+	};
 
-			// Redirect the asset request to ////.  /. 
-			// return {redirectUrl: chrome.extension.getURL("imgs/bg/bg_3.png")};
-			return {redirectUrl: getReplacementImage()};
-		};
+//------------------------------------------------
+// Setup
+
 function setListeners() {
 	var isEnabled = getIsEnableAll();
 
+	console.log("setListeners: getReplacementImageID=" + getReplacementImageID());
+
 	if (isEnabled
 		&&
-		(getReplacementImageID() > 0) )
+		(getReplacementImageID() >= 0) )
 	{
 		// Sets the listeners only if the extension is enabled for the current context
 		chrome.webRequest.onBeforeRequest.addListener(

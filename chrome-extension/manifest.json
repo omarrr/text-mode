@@ -29,9 +29,9 @@
   "content_scripts": [
     {
       "matches": [
+        "file://*/*",
         "http://*/*",
-        "https://*/*",
-        "file://*/*"
+        "https://*/*"
       ],
 
       "css": [
@@ -42,7 +42,7 @@
       "js": [
         "js/vendor/parseuri.js",
         "js/vendor/holder-2.2.min.js",
-        "js/vendor/holder.js",
+        // "js/vendor/holder.js",
         "js/tab.js"
       ],
       "run_at": "document_start",

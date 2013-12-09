@@ -12,6 +12,7 @@
 
 *************************************************/
 
+
 //------------------------------------------------
 // PAGE >> POPUP
 // Get mode (enabled?)
@@ -22,10 +23,13 @@
 	var replacementImageID = 0;
 
 	function getMode(response) {
+		// console.log("========")
+		// console.log("getMode");
+		// console.log("Window: "+this.location);
 		// console.log(response);
 
 		isEnabled = (response.enableAll === "true");
-		replacementImageID = response.replacementImageID;
+		replacementImageID = parseInt(response.replacementImageID);
 		isDesaturated = (response.isDesaturated === "true");
 		useWhiteBg = (response.useWhiteBg === "true");
 
@@ -47,11 +51,14 @@ function getBgImg(){
 }
 
 // Get BODY tag
-	domReady = false;
+	// domReady = false;
 	function onReady() {
-		console.log("onReady");
+		// console.log("========")
+		// console.log("onReady");
+		// console.log("Window: "+this.location);
+		// console.log(this);
 
-		domReady = true;
+		// domReady = true;
 
 		this.setBodyType();
 		this.setFavicon();
@@ -117,77 +124,54 @@ function setBodyType() {
 	}
 }
 
-//------------------------------------------------
-// BLOCK FAVICON
-// Disabled since with this technique the
-// favicons in the bookmarks also change
-// and we don't want that.
-// Need to find a better solution
-//------------------------------------------------
-function setFavicon() {
-	return; // << Read above
-
-	var head = document.getElementsByTagName("head")[0];
-
-	if(head && isEnabled) {
-
-		// FROM: http://userscripts.org/scripts/review/42247
-
-		(function(d, h) {
-		// Create this favicon
-		var ss = d.createElement('link');
-		ss.rel = 'shortcut icon';
-		ss.type = 'image/x-icon';
-		//ss.href = 'data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAACMuAAAjLgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8PDw9PDw8sjw8PP88PDz/PDw8/zw8PP88PDz/PDw8/zw8PLI8PDw9AAAAAAAAAAAAAAAAAAAAAAAAAAA8PDw9PDw8soiIiP/l5eX/19fX/+Tk5P/o6Oj/19fX/+np6f+IiIj/PDw8sjw8PD0AAAAAAAAAAAAAAAAAAAAAPDw8sq+vr//r6+v/zs7O/2pqav/IyMj/yMjI/2pqav+7u7v/6+vr/6+vr/88PDyyAAAAAAAAAAAAAAAAAAAAADw8PP/m5ub/29vb/9vb2//b29v/5ubm/+bm5v/b29v/29vb/9vb2//m5ub/PDw8/wAAAAAAAAAAAAAAAAAAAAA8PDz/6+vr/+Li4v/r6+v/6+vr/+vr6//x8fH/6+vr/+vr6//i4uL/6+vr/zw8PP8AAAAAAAAAAAAAAAAAAAAAPDw8//Dw8P/w8PD/8PDw//Dw8P/w8PD/8PDw//Dw8P/w8PD/8PDw//Dw8P88PDz/AAAAAAAAAAAAAAAAAAAAADw8PLKzs7P/8PDw//j4+P/4+Pj/+Pj4//j4+P/4+Pj/+Pj4//X19f+zs7P/PDw8sgAAAAAAAAAAAAAAAAAAAAA8PDw9PDw8svb29v/X19f/PDw8//b29v/29vb/PDw8/9fX1//29vb/PDw8sjw8PD0AAAAAAAAAAAAAAAAAAAAAAAAAADw8PP/7+/v/29vb/3Z2dv/7+/v/+/v7/3Z2dv/b29v/+/v7/zw8PP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8PDyy/////+/v7//o6Oj////////////o6Oj/7+/v//////88PDyyAAAAAAAAAAAAAAAAPDw8fDw8PP88PDz/PDw8/2VlZf+8vLz/lJSU/7y8vP+UlJT/vLy8/5SUlP+8vLz/PDw8/zw8PP88PDz/PDw8fDw8PLL/////oKCg/zw8PP88PDz/ZWVl/zw8PP9lZWX/PDw8/2VlZf88PDz/PDw8/zw8PP+goKD//////zw8PLI8PDw9PDw8/zw8PP88PDx8PDw8sjw8PP88PDz/PDw8/zw8PP88PDz/PDw8/zw8PLI8PDx8PDw8/zw8PP88PDw9AAAAAAAAAAAAAAAAAAAAADw8PP//////PDw8sgAAAAAAAAAAPDw8sv////88PDz/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8PDz//////zw8PHwAAAAAAAAAADw8PHz/////PDw8/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPDw8Kzw8PP88PDz/AAAAAAAAAAA8PDz/PDw8/zw8PCsAAAAAAAAAAAAAAAAAAAAA8A8AAOAHAADAAwAAwAMAAMADAADAAwAAwAMAAOAHAADgBwAA4AcAAIABAAAAAAAAkAkAAPGPAADzzwAA+Z8AAA==';
-
-		// used: http://www.motobit.com/util/base64-decoder-encoder.asp
-		ss.href = 'data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAA4HgAAPA8AJB4Hu0RPA8AUB4H8XIPA/KMB4HzpwPA9MKB4PXewPD2++B4+BnwPPk4eB76VzwP+3ceB/yYDwP9ug==';
-		//ss.href = "url('"+chrome.extension.getURL("imgs/favicon.ico")+"')";
-
-		// Remove any existing favicons
-		var links = h.getElementsByTagName('link');
-		for (var i=0; i<links.length; i++) {
-			if (links[i].href == ss.href) return;
-			if (links[i].rel == "shortcut icon" || links[i].rel=="icon")
-				h.removeChild(links[i]);
-		}
-		// Add this favicon to the head
-		h.appendChild(ss);
-		// Force browser to acknowledge
-		var shim = document.createElement('iframe');
-		shim.width = shim.height = 0;
-		document.body.appendChild(shim);
-		shim.src = "icon";
-		document.body.removeChild(shim);
-
-		})(document, head);
-
-	}
-
-}
 
 //------------------------------------------------
 // Holder.js
 //------------------------------------------------
 function replaceHolderImgs()
 {
+	// console.log("---Holder")
+	// console.log("	location = "+document.location);
+	// console.log("	replaceHolderImgs: replacementImageID="+replacementImageID);
+	// console.log("	replaceHolderImgs: (replacementImageID === 0)="+(replacementImageID === 0));
+	// console.log("	replaceHolderImgs: isEnabled="+isEnabled);
+
 	if(isEnabled 
 		&&
-		(replacementImageID === 0) ) 
+		(replacementImageID === 0) )
 	{
-		var holderImg = "holder.js/%W%x%H%";
-		var holderBgImg = "url(?holder.js/%W%x%H%/social) no-repeat";
+		var holderImg = "holder.js/%W%x%H%/";
+		var holderTextImg = "holder.js/%W%x%H%/text:%T%";
+		var holderBgImg = "url(?holder.js/%W%x%H%/) no-repeat";
 		var imgs = document.getElementsByTagName('img');
+		
+		// console.log("	imgs: "+imgs.length);
+
 		for (var i=0; i<imgs.length; i++) {
-			//imgs[i].src = holderImg.split("%W%").join(imgs[i].width).split("%H%").join(imgs[i].height);
-			imgs[i].src = "";
-			imgs[i].css("background", holderBgImg.split("%W%").join(imgs[i].width).split("%H%").join(imgs[i].height));
+
+			var imgEl = imgs[i];
+			var imgAlt = imgEl.alt;
+			var styleW = imgEl.style.width?imgEl.style.width:imgEl.width;
+			var styleH = imgEl.style.height?imgEl.style.height:imgEl.height;
+
+			if (imgAlt) {
+				// if (styleW && styleH){
+					// imgEl.src = holderTextImg.split("%W%").join(styleW).split("%H%").join(styleH).split("%T%").join(imgAlt);
+					// imgEl.style.backgroundImage = "";									
+				// }
+				// else {
+					imgEl.src = "";
+					imgEl.style.backgroundImage = holderBgImg.split("%W%").join(styleW).split("%H%").join(styleH);				
+				// }
+			}
+			else {
+				imgEl.src = holderImg.split("%W%").join(styleW).split("%H%").join(styleH);
+				imgEl.style.backgroundImage = "";				
+			}
 		}
 		Holder.run();		
 	}
 }
-
-//$("img").css("backgroundImage", url('"+chrome.extension.getURL("imgs/bg_lines_03_grey.png")+"');
 
 //------------------------------------------------
 // Manual redirect
@@ -266,13 +250,71 @@ function replaceHolderImgs()
 				event.srcElement.src = getBlankImg();
 
 
-				//event.srcElement.src = chrome.extension.getURL("imgs/bg_blank.png");
+				// event.srcElement.src = chrome.extension.getURL("imgs/bg_blank.png");
 				// event.srcElement.style.backgroundImage = "url('"+chrome.extension.getURL("imgs/bg_lines_03_grey.png")+"')";
-				
-				//event.srcElement.style.backgroundImage = "url('"+chrome.extension.getURL("imgs/bg_lines_08.png")+"')";
+				// event.srcElement.style.backgroundImage = "url('"+chrome.extension.getURL("imgs/bg_lines_08.png")+"')";
 				event.srcElement.style.backgroundImage = "url('"+getBgImg()+"')";
 		}
 	}
 
 	document.addEventListener('beforeload', doBeforeLoad, true);
+
+
+
+
+
+
+//------------------------------------------------
+// BLOCK FAVICON
+// Disabled since with this technique the
+// favicons in the bookmarks also change
+// and we don't want that.
+// Need to find a better solution
+//------------------------------------------------
+function setFavicon() {
+	return; // << Read above
+
+
+
+
+
+
+	var head = document.getElementsByTagName("head")[0];
+
+	if(head && isEnabled) {
+
+		// FROM: http://userscripts.org/scripts/review/42247
+
+		(function(d, h) {
+		// Create this favicon
+		var ss = d.createElement('link');
+		ss.rel = 'shortcut icon';
+		ss.type = 'image/x-icon';
+		//ss.href = 'data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAACMuAAAjLgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8PDw9PDw8sjw8PP88PDz/PDw8/zw8PP88PDz/PDw8/zw8PLI8PDw9AAAAAAAAAAAAAAAAAAAAAAAAAAA8PDw9PDw8soiIiP/l5eX/19fX/+Tk5P/o6Oj/19fX/+np6f+IiIj/PDw8sjw8PD0AAAAAAAAAAAAAAAAAAAAAPDw8sq+vr//r6+v/zs7O/2pqav/IyMj/yMjI/2pqav+7u7v/6+vr/6+vr/88PDyyAAAAAAAAAAAAAAAAAAAAADw8PP/m5ub/29vb/9vb2//b29v/5ubm/+bm5v/b29v/29vb/9vb2//m5ub/PDw8/wAAAAAAAAAAAAAAAAAAAAA8PDz/6+vr/+Li4v/r6+v/6+vr/+vr6//x8fH/6+vr/+vr6//i4uL/6+vr/zw8PP8AAAAAAAAAAAAAAAAAAAAAPDw8//Dw8P/w8PD/8PDw//Dw8P/w8PD/8PDw//Dw8P/w8PD/8PDw//Dw8P88PDz/AAAAAAAAAAAAAAAAAAAAADw8PLKzs7P/8PDw//j4+P/4+Pj/+Pj4//j4+P/4+Pj/+Pj4//X19f+zs7P/PDw8sgAAAAAAAAAAAAAAAAAAAAA8PDw9PDw8svb29v/X19f/PDw8//b29v/29vb/PDw8/9fX1//29vb/PDw8sjw8PD0AAAAAAAAAAAAAAAAAAAAAAAAAADw8PP/7+/v/29vb/3Z2dv/7+/v/+/v7/3Z2dv/b29v/+/v7/zw8PP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8PDyy/////+/v7//o6Oj////////////o6Oj/7+/v//////88PDyyAAAAAAAAAAAAAAAAPDw8fDw8PP88PDz/PDw8/2VlZf+8vLz/lJSU/7y8vP+UlJT/vLy8/5SUlP+8vLz/PDw8/zw8PP88PDz/PDw8fDw8PLL/////oKCg/zw8PP88PDz/ZWVl/zw8PP9lZWX/PDw8/2VlZf88PDz/PDw8/zw8PP+goKD//////zw8PLI8PDw9PDw8/zw8PP88PDx8PDw8sjw8PP88PDz/PDw8/zw8PP88PDz/PDw8/zw8PLI8PDx8PDw8/zw8PP88PDw9AAAAAAAAAAAAAAAAAAAAADw8PP//////PDw8sgAAAAAAAAAAPDw8sv////88PDz/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8PDz//////zw8PHwAAAAAAAAAADw8PHz/////PDw8/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPDw8Kzw8PP88PDz/AAAAAAAAAAA8PDz/PDw8/zw8PCsAAAAAAAAAAAAAAAAAAAAA8A8AAOAHAADAAwAAwAMAAMADAADAAwAAwAMAAOAHAADgBwAA4AcAAIABAAAAAAAAkAkAAPGPAADzzwAA+Z8AAA==';
+
+		// used: http://www.motobit.com/util/base64-decoder-encoder.asp
+		ss.href = 'data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAAAAAAAAZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/wAAAAAAAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP8AAAAAAAAAAAAAAABkZGT/ZGRk/2RkZP9kZGT/AAAAAAAAAAAAAAAAAAAAAGRkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/wAAAAAAAAAA4HgAAPA8AJB4Hu0RPA8AUB4H8XIPA/KMB4HzpwPA9MKB4PXewPD2++B4+BnwPPk4eB76VzwP+3ceB/yYDwP9ug==';
+		//ss.href = "url('"+chrome.extension.getURL("imgs/favicon.ico")+"')";
+
+		// Remove any existing favicons
+		var links = h.getElementsByTagName('link');
+		for (var i=0; i<links.length; i++) {
+			if (links[i].href == ss.href) return;
+			if (links[i].rel == "shortcut icon" || links[i].rel=="icon")
+				h.removeChild(links[i]);
+		}
+		// Add this favicon to the head
+		h.appendChild(ss);
+		// Force browser to acknowledge
+		var shim = document.createElement('iframe');
+		shim.width = shim.height = 0;
+		document.body.appendChild(shim);
+		shim.src = "icon";
+		document.body.removeChild(shim);
+
+		})(document, head);
+
+	}
+
+}
 
