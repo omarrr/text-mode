@@ -50,5 +50,5 @@ TM declutters the web by loading all pages in text form (no images, animation or
 	* Reload extension with every code update via 'Reload (⌘R)'
 * Deployment to Chrome Store
 	* ZIP the 'chrome-extension' folder
-	* Upload to the developer dashboard: [https://chrome.google.com/webstore/developer/](https://chrome.google.com/webstore/developer/)
+	* Upload to the developer dashboard: [https://chrome.google.com/webstore/developer/dashboard](https://chrome.google.com/webstore/developer/dashboard)
 	* More details at [Publishing Your App](https://developers.google.com/chrome/web-store/docs/publish)
