@@ -23,11 +23,6 @@
 	var replacementImageID = 0;
 
 	function getMode(response) {
-		// console.log("========")
-		// console.log("getMode");
-		// console.log("Window: "+this.location);
-		// console.log(response);
-
 		isEnabled = (response.enableAll === "true");
 		replacementImageID = parseInt(response.replacementImageID);
 		isDesaturated = (response.isDesaturated === "true");
@@ -39,11 +34,10 @@
 	chrome.extension.sendMessage({method: "getMode", refresh: true}, this.getMode);
 
 //Images
-var img_url = "imgs/bg/bg_%ID%.png";
 function getBlankImg(){
 	return chrome.extension.getURL("imgs/bg/bg_blank_1px.png");
-	// return chrome.extension.getURL("imgs/bg/bg_grey_1px.png");
 }
+var img_url = "imgs/bg/bg_%ID%.png";
 function getBgImg(){
 	img_curr = img_url.replace("%ID%", replacementImageID);
 
@@ -53,11 +47,6 @@ function getBgImg(){
 // Get BODY tag
 	// domReady = false;
 	function onReady() {
-		// console.log("========")
-		// console.log("onReady");
-		// console.log("Window: "+this.location);
-		// console.log(this);
-
 		// domReady = true;
 
 		this.setBodyType();
@@ -130,12 +119,6 @@ function setBodyType() {
 //------------------------------------------------
 function replaceHolderImgs()
 {
-	// console.log("---Holder")
-	// console.log("	location = "+document.location);
-	// console.log("	replaceHolderImgs: replacementImageID="+replacementImageID);
-	// console.log("	replaceHolderImgs: (replacementImageID === 0)="+(replacementImageID === 0));
-	// console.log("	replaceHolderImgs: isEnabled="+isEnabled);
-
 	if(isEnabled 
 		&&
 		(replacementImageID === 0) )
@@ -145,8 +128,6 @@ function replaceHolderImgs()
 		var holderBgImg = "url(?holder.js/%W%x%H%/) no-repeat";
 		var imgs = document.getElementsByTagName('img');
 		
-		// console.log("	imgs: "+imgs.length);
-
 		for (var i=0; i<imgs.length; i++) {
 
 			var imgEl = imgs[i];
@@ -246,13 +227,7 @@ function replaceHolderImgs()
 				// Set the source to the new url you want the element to point to
 				// event.srcElement.src = "replacement.png";
 
-				//event.srcElement.src = chrome.extension.getURL("imgs/bg_blank_1px.png");
 				event.srcElement.src = getBlankImg();
-
-
-				// event.srcElement.src = chrome.extension.getURL("imgs/bg_blank.png");
-				// event.srcElement.style.backgroundImage = "url('"+chrome.extension.getURL("imgs/bg_lines_03_grey.png")+"')";
-				// event.srcElement.style.backgroundImage = "url('"+chrome.extension.getURL("imgs/bg_lines_08.png")+"')";
 				event.srcElement.style.backgroundImage = "url('"+getBgImg()+"')";
 		}
 	}

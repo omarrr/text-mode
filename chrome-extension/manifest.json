@@ -42,7 +42,6 @@
       "js": [
         "js/vendor/parseuri.js",
         "js/vendor/holder-2.2.min.js",
-        // "js/vendor/holder.js",
         "js/tab.js"
       ],
       "run_at": "document_start",
@@ -63,7 +62,6 @@
 
     "__default_popup_comment": "Commenting the popup since we don't need it for now",
     "__default_popup": "html/popup.html"
-
   },
   
   "web_accessible_resources": [
@@ -74,15 +72,5 @@
     "imgs/bg/bg_2.png",
     "imgs/bg/bg_3.png",
     "imgs/bg/bg_4.png"
-
-    // "imgs/bg_lines_01.png",
-    // "imgs/bg_lines_02.png",
-    // "imgs/bg_lines_03.png",
-    // "imgs/bg_lines_03_grey.png",
-    // "imgs/bg_lines_04.png",
-    // "imgs/bg_lines_05.png",
-    // "imgs/bg_lines_08.png",
-    // "imgs/bg_lines_09.png",
-    // "imgs/favicon.ico"
   ]
 }
