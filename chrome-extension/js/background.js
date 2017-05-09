@@ -140,6 +140,9 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 	onBeforeRequestImage = function(info)
 	{
+		if (info.url.includes('reloadedAt=')) {
+		  return {};
+		}
 		// Redirect the image request to blank.
 		return {redirectUrl: getBlankReplacementImage()};
 	};
