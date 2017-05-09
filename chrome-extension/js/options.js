@@ -90,6 +90,26 @@ $("#whiteBg").click(function() {
     }
 });
 
+function getBlockRemoteFonts() {
+	return !(localStorage['block_remote_fonts'] === "false");
+}
+function setBlockRemoteFonts(value) {
+	localStorage['block_remote_fonts'] = value;
+}
+
+$("#blockRemoteFonts").prop('checked', getBlockRemoteFonts());
+$("#blockRemoteFonts").click(function() {
+	var $this = $(this);
+	// $this will contain a reference to the checkbox   
+	if ($this.is(':checked')) {
+		// the checkbox was checked 
+		setBlockRemoteFonts(true);
+	} else {
+		// the checkbox was unchecked
+		setBlockRemoteFonts(false);
+	}
+});
+
 
 
 //-----------------------------------------------------------------------------

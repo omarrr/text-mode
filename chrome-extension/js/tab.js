@@ -52,7 +52,7 @@ function getBgImg(){
 		this.setBodyType();
 		this.setFavicon();
 		this.replaceHolderImgs();
-
+		this.setupLoadability()
 	}
 	window.addEventListener('DOMContentLoaded', onReady, false);
 
@@ -113,6 +113,56 @@ function setBodyType() {
 	}
 }
 
+const reloadedAtQueryPattern = /reloadedAt=\d+/
+const startQueryPattern = /\?.+/
+function setupLoadability () {
+	var forEach = Array.prototype.forEach;
+	var imgs = document.getElementsByTagName('img');
+	forEach.call(imgs, function (img) {
+		img.onclick = function (event) {
+			event.preventDefault()
+			event.stopPropagation()
+
+			const parser = document.createElement('a');
+			parser.href = event.currentTarget.src
+
+			if (reloadedAtQueryPattern.test(parser.search)) {
+				event.currentTarget.src = event.currentTarget.src.replace(reloadedAtQueryPattern, `reloadedAt=${Date.now()}`)
+			} else if (startQueryPattern.test(parser.search)) {
+				event.currentTarget.src = event.currentTarget.src + `&reloadedAt=${Date.now()}`
+			} else {
+				event.currentTarget.src = event.currentTarget.src + `?reloadedAt=${Date.now()}`
+			}
+		}
+	});
+
+	var links = document.getElementsByTagName('a');
+	forEach.call(links, function (link) {
+		link.onclick = function (event) {
+			const children = event.currentTarget.getElementsByTagName('*')
+			const length = children.length
+			for (let i = 0; i < length; ++ i) {
+				const child = children[i]
+				if (child.tagName === 'IMG') {
+					const parser = document.createElement('a');
+					parser.href = child.src
+
+					if (reloadedAtQueryPattern.test(parser.search)) {
+						return
+					} else if (startQueryPattern.test(parser.search)) {
+						child.src = child.src + `&reloadedAt=${Date.now()}`
+						event.preventDefault()
+						event.stopPropagation()
+					} else {
+						child.src = child.src + `?reloadedAt=${Date.now()}`
+						event.preventDefault()
+						event.stopPropagation()
+					}
+				}
+			}
+		}
+	});
+}
 
 //------------------------------------------------
 // Holder.js
