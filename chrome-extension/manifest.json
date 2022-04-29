@@ -1,6 +1,6 @@
 {
   "name": "Text Mode",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "manifest_version": 2,
   "description": "Browse the web without distractions via simple text based pages.",
 
@@ -11,7 +11,6 @@
   },
 
   "permissions": [
-    "tabs",
     "webRequest",
     "webRequestBlocking",
     "http://*/*",
