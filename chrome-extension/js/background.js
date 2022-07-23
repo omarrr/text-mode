@@ -87,6 +87,10 @@ function getUseWhiteBg() {
 	return !(localStorage['use_white_bg'] === "false");
 }
 
+function isBlockRemoteFonts () {
+	return localStorage['block_remote_fonts'] === 'true';
+}
+
 //------------------------------------------------
 // Replacement Image
 //------------------------------------------------
@@ -140,6 +144,9 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 	onBeforeRequestImage = function(info)
 	{
+		if (info.url.includes('reloadedAt=')) {
+		  return {};
+		}
 		// Redirect the image request to blank.
 		return {redirectUrl: getBlankReplacementImage()};
 	};
@@ -149,6 +156,10 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 		// Redirect the asset request to ////
 		return {redirectUrl: getReplacementImage()};
+	};
+	onBeforeRequestFont = function(info)
+	{
+		return {cancel: true};
 	};
 
 //------------------------------------------------
@@ -202,12 +213,31 @@ function setListeners() {
 			// extraInfoSpec
 			["blocking"]
 		);
+		chrome.webRequest.onBeforeRequest.addListener(
+			// listener
+			onBeforeRequestFont,
+			// filters
+			{
+				urls: [
+					"http://*/*",
+					"https://*/*"
+				],
+
+				// Possible values:
+				// "main_frame", "sub_frame", "stylesheet", "script",
+				// "image", "object", "xmlhttprequest", "other"
+				types: ["font"]
+			},
+			// extraInfoSpec
+			["blocking"]
+		);
 	}
 	else
 	{
 		// Remove listeners
 		chrome.webRequest.onBeforeRequest.removeListener( onBeforeRequestImage );
 		chrome.webRequest.onBeforeRequest.removeListener( onBeforeRequestObject );
+		chrome.webRequest.onBeforeRequest.removeListener( onBeforeRequestFont );
 	}
 }
 
