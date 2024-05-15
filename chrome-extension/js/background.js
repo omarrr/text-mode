@@ -1,4 +1,3 @@
-
 /*************************************************
 
 	BG.js
@@ -8,207 +7,289 @@
 	Is fired when the extension loads and it's always running
 
 	Communication
-		* Background.js <-> Options.js	via localStorage
-		* Background.js <-> Tab.js		via Message Passing 
-										(http://developer.chrome.com/extensions/messaging.html)
+		* Background.js <-> Options.js via chrome.storage.sync
+		* Background.js <-> Tab.js via Message Passing 
+		(http://developer.chrome.com/extensions/messaging.html)
 
 *************************************************/
+
+//————————————————————————————————————
+// DUP
+//	- background.js
+//	- tab.js
+//	- options.html
+//————————————————————————————————————
+const imageReplacementUrls = [
+  // "imgs/bg/bg_blank_1px.png",
+  // "imgs/bg/bg_yellow_1000px.png",
+  "imgs/bg/bg_grey_90.png",
+  "imgs/bg/bg_grey_75.png",
+  "imgs/bg/bg_grey_50.png",
+  "imgs/bg/bg_3.png",
+  "imgs/bg/bg_4.png",
+];
+//————————————————————————————————————
+
+function setDefaultOptions() {
+  chrome.storage.sync.get("options", (data) => {
+    const options = data.options || {};
+    if (!data.options) {
+      options.enable_all = false;
+      options.replacement_image = 1;
+      options.is_desaturated = true;
+      options.increase_contrast = false;
+      options.use_white_bg = false;
+      chrome.storage.sync.set({ options });
+    }
+  });
+}
+
+self.addEventListener("install", (event) => {
+  console.log("Service Worker installing.");
+  setDefaultOptions();
+});
+
+self.addEventListener("activate", (event) => {
+  console.log("Service Worker activating.");
+  setDefaultOptions();
+});
 
 //------------------------------------------------
 // UI [T] Button
 //------------------------------------------------
-var iconOn = "../imgs/iconOn.png";
-var iconOff = "../imgs/iconOff.png";
 
-// Called when the user clicks on the browser action.
-chrome.browserAction.onClicked.addListener(function(tab) {
-
-	toggleIsEnableAll();
-
-	setListeners();
-	updateUI();
-	refreshTab(tab.id);
-
-		// chrome.tabs.executeScript(
-		// 	tab.id,
-		// 	// {code:"document.body.style.background='red !important'"},
-		// 	{code:"-webkit-filter: grayscale(100%) !important;"},
-		// 	null
-		// 	);
-		// chrome.tabs[tab.id].insertCSS(
-		// 	tab.id,
-		// 	// {code:"document.body.style.background='red !important'"},
-		// 	{code:"body {-webkit-filter: grayscale(100%) !important;}"},
-		// 	null
-		// 	);
+chrome.action.onClicked.addListener((tab) => {
+  toggleIsEnableAll();
+  updateUI();
+  refreshTab(tab.id);
 });
 
 function updateUI() {
-	var isEnabled = getIsEnableAll();
-	var iconCurr = isEnabled ? iconOn : iconOff;
-	chrome.browserAction.setIcon({path:iconCurr});
+  getIsEnableAll((isEnabled) => {
+    const iconCurr = isEnabled
+      ? {
+          16: chrome.runtime.getURL("imgs/icon/icon-ON@16px.png"),
+          32: chrome.runtime.getURL("imgs/icon/icon-ON@32px.png"),
+        }
+      : {
+          16: chrome.runtime.getURL("imgs/icon/icon-OFF@16px.png"),
+          32: chrome.runtime.getURL("imgs/icon/icon-OFF@32px.png"),
+        };
+
+    // chrome.action.setIcon({ path: iconCurr }, () => {
+    //   if (chrome.runtime.lastError) {
+    //     console.error("Failed to set icon:", chrome.runtime.lastError.message);
+    //   }
+    // });
+    chrome.action.setIcon({ path: iconCurr });
+  });
 }
 
 //------------------------------------------------
 // Refresh
 //------------------------------------------------
 function refreshTab(tabId) {
-	chrome.tabs.reload(tabId);
+  chrome.tabs.reload(tabId);
 }
 
 //------------------------------------------------
 // ENABLE Mode
 //------------------------------------------------
-function getIsEnableAll()
-{
-	return localStorage['enable_all'] === "true";
-}
-function setIsEnableAll(enable)
-{
-	localStorage['enable_all'] = enable;
-	return enable;
-}
-function toggleIsEnableAll()
-{
-	return setIsEnableAll(!getIsEnableAll());
-}
-
-//------------------------------------------------
-// Desaturation
-//------------------------------------------------
-function getIsDesaturated() {
-	return !(localStorage['is_desaturated'] === "false");
+function getIsEnableAll(callback) {
+  chrome.storage.sync.get("options", (data) => {
+    const options = data.options || {};
+    // console.log("getIsEnableAll");
+    // console.log(options);
+    // console.log(
+    //   "options.enable_all => " +
+    //     options.enable_all +
+    //     "..." +
+    //     typeof options.enable_all
+    // );
+    callback(options.enable_all === true);
+  });
 }
 
+function setIsEnableAll(enable, callback) {
+  //   console.log(">>> setIsEnableAll: " + enable + "..." + typeof enable);
+
+  chrome.storage.sync.get("options", (data) => {
+    const options = data.options || {};
+    options.enable_all = enable;
+    chrome.storage.sync.set({ options });
+
+    callback(enable);
+  });
+}
+
+function toggleIsEnableAll() {
+  getIsEnableAll((isEnabled) => {
+    setIsEnableAll(!isEnabled, (isEnabled) => {
+      setListeners();
+      updateUI();
+    });
+  });
+}
 //------------------------------------------------
-// White BG
+// OPTIONS
 //------------------------------------------------
-function getUseWhiteBg() {
-	return !(localStorage['use_white_bg'] === "false");
+function getIsDesaturated(callback) {
+  chrome.storage.sync.get("options", (data) => {
+    const options = data.options || {};
+    callback(options.is_desaturated === true);
+  });
+}
+function getIncreaseContrast(callback) {
+  chrome.storage.sync.get("options", (data) => {
+    const options = data.options || {};
+    callback(options.increase_contrast === true);
+  });
+}
+function getUseWhiteBg(callback) {
+  chrome.storage.sync.get("options", (data) => {
+    const options = data.options || {};
+    callback(options.use_white_bg === true);
+  });
 }
 
 //------------------------------------------------
 // Replacement Image
 //------------------------------------------------
-function getReplacementImageID() {
-	var currImageReplacementDefault = 1;
-	var currImageReplacementID = localStorage["replacement_image"] || currImageReplacementDefault;
-
-	return currImageReplacementID;
-}
-function getReplacementImage() {
-	var currImageReplacementID = getReplacementImageID();
-	var currImageReplacement = chrome.extension.getURL("imgs/bg/bg_"+currImageReplacementID+".png");
-
-	return currImageReplacement;
-}
-function getBlankReplacementImage() {
-	var imageReplacement = chrome.extension.getURL("imgs/bg/bg_blank_1px.png");
-
-	return imageReplacement;
+function getReplacementImageID(callback) {
+  chrome.storage.sync.get("options", (data) => {
+    const options = data.options || {};
+    const currImageReplacementDefault = 1;
+    const currImageReplacementID =
+      options.replacement_image || currImageReplacementDefault;
+    callback(currImageReplacementID);
+  });
 }
 
-//------------------------------------------------
-// POPUP >> PAGE
-//------------------------------------------------
-// This function is called on page load by the plain-text.js
-// It returns the current Mode
-chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-	var response = {};
+function getReplacementImage(callback) {
+  getReplacementImageID((currImageReplacementID) => {
+    var currImageReplacement = chrome.runtime.getURL(
+      imageReplacementUrls[currImageReplacementID]
+      //   "imgs/bg/bg_" + currImageReplacementID + ".png"
+    );
+    callback(currImageReplacement);
+  });
+}
 
-	if (request.method === "getMode"){
-		response.enableAll = getIsEnableAll().toString();
-		response.replacementImageID = getReplacementImageID().toString();
-		response.isDesaturated = getIsDesaturated().toString();
-		response.useWhiteBg = getUseWhiteBg().toString();
-	}
-	if (request.refresh === "true"){
-		setListeners();
-		updateUI();
-	}
+function getBlankReplacementImage(callback) {
+  var imageReplacement = chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
+  //   var imageReplacement = chrome.runtime.getURL("imgs/bg/bg_grey_1px.png");
+  //   var imageReplacement = chrome.runtime.getURL("imgs/bg/bg_yellow_1000px.png");
+  callback(imageReplacement);
+}
 
-    sendResponse(response); // snub them.
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.method === "getMode") {
+    chrome.storage.sync.get("options", (data) => {
+      const options = data.options || {};
+      const response = {
+        enableAll: options.enable_all === true,
+        replacementImageID: options.replacement_image || 1,
+        isDesaturated: options.is_desaturated === true,
+        increaseContrast: options.increase_contrast === true,
+        useWhiteBg: options.use_white_bg === true,
+      };
+      sendResponse(response);
+    });
+    return true; // Keeps the message channel open for sendResponse.
+  }
+
+  if (request.refresh === "true") {
+    setListeners();
+    updateUI();
+  }
+  return true;
 });
 
 //------------------------------------------------
 // Avoid loading IMGs and OBJECTs
-//		(We let IFRAMEs through since they break if blocked this way)
 //------------------------------------------------
 
 //------------------------------------------------
 // Listeners
-
-	onBeforeRequestImage = function(info)
-	{
-		// Redirect the image request to blank.
-		return {redirectUrl: getBlankReplacementImage()};
-	};
-	onBeforeRequestObject = function(info) {
-		// Canceling the request shows an ugly Chrome message
-		//return {cancel:true};
-
-		// Redirect the asset request to ////
-		return {redirectUrl: getReplacementImage()};
-	};
-
-//------------------------------------------------
-// Setup
-
 function setListeners() {
-	var isEnabled = getIsEnableAll();
+  console.log("setListeners");
+  getIsEnableAll((isEnabled) => {
+    if (isEnabled) {
+      // Apply blocking rules when enableAll is true
+      applyBlockingRules();
+    } else {
+      // Remove blocking rules when enableAll is false
+      removeBlockingRules();
+    }
+  });
+}
 
-	console.log("setListeners: getReplacementImageID=" + getReplacementImageID());
+function applyBlockingRules() {
+  console.log("applyBlockingRules");
+  //   return;
+  getReplacementImageID((imageID) => {
+    getBlankReplacementImage((blankImageUrl) => {
+      getReplacementImage((replacementImageUrl) => {
+        chrome.declarativeNetRequest.updateDynamicRules({
+          addRules: [
+            {
+              id: 1,
+              priority: 1,
+              action: {
+                type: "redirect",
+                redirect: { url: blankImageUrl },
+                // redirect: { url: replacementImageUrl },
+              },
+              condition: { urlFilter: "*", resourceTypes: ["image"] },
+            },
+            // {
+            //   id: 1,
+            //   priority: 1,
+            //   action: {
+            //     type: "block",
+            //   },
+            //   condition: { urlFilter: "*", resourceTypes: ["image"] },
+            // },
+            {
+              id: 2,
+              priority: 1,
+              action: {
+                type: "redirect",
+                redirect: { url: replacementImageUrl },
+              },
+              condition: { urlFilter: "*", resourceTypes: ["object"] },
+            },
+            {
+              id: 3,
+              priority: 1,
+              action: {
+                // type: "block",
+                type: "redirect",
+                redirect: { url: replacementImageUrl },
+              },
+              condition: {
+                urlFilter: "*",
+                resourceTypes: [
+                  "media",
+                  //   "xmlhttprequest",
+                  //   "websocket",
+                  //   "other",
+                  //   "sub_frame",
+                ],
+              },
+            },
+          ],
+          removeRuleIds: [1, 2, 3],
+        });
+      });
+    });
+  });
+}
 
-	if (isEnabled
-		&&
-		(getReplacementImageID() >= 0) )
-	{
-		// Sets the listeners only if the extension is enabled for the current context
-		chrome.webRequest.onBeforeRequest.addListener(
-			// listener
-			onBeforeRequestImage,
-			// filters
-			{
-				urls: [
-					"http://*/*",
-					"https://*/*"
-				],
-
-				// Possible values:
-				// "main_frame", "sub_frame", "stylesheet", "script",
-				// "image", "object", "xmlhttprequest", "other"
-				types: ["image"]
-			},
-			// extraInfoSpec
-			["blocking"]
-		);
-		chrome.webRequest.onBeforeRequest.addListener(
-			// listener
-			onBeforeRequestObject,
-			// filters
-			{
-				urls: [
-					"http://*/*",
-					"https://*/*"
-				],
-
-				// Gmail breaks if we block IFRAMES so we block at TAB level (in tab.js)
-				//types: ["sub_frame", "object"]
-				types: ["object"] 
-					// Possible values:
-					// "main_frame", "sub_frame", "stylesheet", "script",
-					// "image", "object", "xmlhttprequest", "other"
-			},
-			// extraInfoSpec
-			["blocking"]
-		);
-	}
-	else
-	{
-		// Remove listeners
-		chrome.webRequest.onBeforeRequest.removeListener( onBeforeRequestImage );
-		chrome.webRequest.onBeforeRequest.removeListener( onBeforeRequestObject );
-	}
+function removeBlockingRules() {
+  chrome.declarativeNetRequest.updateDynamicRules({
+    removeRuleIds: [1, 2, 3],
+  });
 }
 
 setListeners();

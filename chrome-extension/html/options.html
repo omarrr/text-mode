@@ -1,59 +1,92 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>Text Mode</title>
-    
     <script src="../js/vendor/holder.js"></script>
-    <script src="../js/vendor/jquery-2.0.3.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="../css/options.css">
+    <link rel="stylesheet" type="text/css" href="../css/options.css" />
   </head>
-
   <body class="__plain_text_whitelisted__">
- 
-    <div id="wrapper">
-
+    <form id="optionsForm">
+      <div id="wrapper">
         <div id="head">
-          <img src="../icons/icon_128x128.png">
+          <img src="../icons/icon_128x128.png" />
         </div>
         <div>
           <h2>B&W Mode</h2>
           <ul id="bgMode">
             <li>
-              <input id="desat" type="checkbox" name="box_all">
-              <label for="desat">Desaturate colors</label>
+              <input type="checkbox" id="desat" />
+              <label for="desat">Desaturate colors:</label>
             </li>
             <li>
-              <input id="whiteBg" type="checkbox" name="box_all">
-              <label for="whiteBg">White background pages</label>
+              <input type="checkbox" id="increaseContrast" />
+              <label for="increaseContrast">Increase contrast:</label>
+            </li>
+            <li>
+              <input type="checkbox" id="whiteBg" />
+              <label for="whiteBg">Use White Background:</label>
             </li>
           </ul>
         </div>
-
         <div>
-          <h2>Image Replacement</h2>          
+          <h2>Image Replacement</h2>
           <ul id="imageReplacement">
-            <li><input id="imgRep0" type="radio" name="bgImgRep0" value="0">
-                <label for="imgRep0"><img src="holder.js/100x100/"/></label>
+            <li>
+              <input
+                type="radio"
+                id="imgRep0"
+                name="imageReplacement"
+                value="0"
+              />
+              <label for="imgRep0">
+                <!-- <img src="../js/vendor/holder.js/100x100/"/> -->
+                <img src="../imgs/bg/bg_grey_90.png" />
+              </label>
             </li>
-            <li><input id="imgRep1" type="radio" name="bgImgRep1" value="1">
-                <label for="imgRep1"><img src="../imgs/bg/bg_1.png"/></label>
+            <li>
+              <input
+                type="radio"
+                id="imgRep1"
+                name="imageReplacement"
+                value="1"
+              />
+              <label for="imgRep1"
+                ><img src="../imgs/bg/bg_grey_75.png"
+              /></label>
             </li>
-            <li><input id="imgRep2" type="radio" name="bgImgRep2" value="2">
-                <label for="imgRep2"><img src="../imgs/bg/bg_2.png"/></label>
+            <li>
+              <input
+                type="radio"
+                id="imgRep2"
+                name="imageReplacement"
+                value="2"
+              />
+              <label for="imgRep2"
+                ><img src="../imgs/bg/bg_grey_50.png"
+              /></label>
             </li>
-            <li><input id="imgRep3" type="radio" name="bgImgRep3" value="3">
-                <label for="imgRep3"><img src="../imgs/bg/bg_3.png"/></label>
+            <li>
+              <input
+                type="radio"
+                id="imgRep3"
+                name="imageReplacement"
+                value="3"
+              />
+              <label for="imgRep3"><img src="../imgs/bg/bg_3.png" /></label>
             </li>
-            <li><input id="imgRep4" type="radio" name="bgImgRep4" value="4">
-                <label for="imgRep4"><img src="../imgs/bg/bg_4.png"/></label>
+            <li>
+              <input
+                type="radio"
+                id="imgRep4"
+                name="imageReplacement"
+                value="4"
+              />
+              <label for="imgRep4"><img src="../imgs/bg/bg_4.png" /></label>
             </li>
           </ul>
         </div>
-
-    </div>
-
+      </div>
+    </form>
     <script src="../js/options.js"></script>
-
   </body>
 </html>

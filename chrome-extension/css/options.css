@@ -7,7 +7,6 @@ body {
   font-size: 11px;
 
   background-color: #ccc;
-  
 }
 #wrapper {
   background-color: #fff;
@@ -52,6 +51,7 @@ ul {
 }
 #imageReplacement li {
   display: inline;
+  /* display: inline-block; */
 }
 #imageReplacement li input {
   display: none;
@@ -60,6 +60,8 @@ ul {
   padding: 5px;
 }
 #imageReplacement .selected img {
-  padding: 4px;
-  border: 1px solid #f00;
+  /* padding: 4px; */
+  /* border: 2px solid #f00; */
+  outline: 4px solid #666666;
+  outline-offset: -2px;
 }
