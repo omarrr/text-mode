@@ -1,5 +1,4 @@
-Text Mode
-==========
+# Text Mode
 
 Text Mode is a Chrome extension that allows to browse the web without distractions via clean simple text based pages.
 
@@ -34,22 +33,20 @@ Text Mode declutters the web by loading all pages in text form (no images, anima
     * [dataset API](http://davidwalsh.name/element-dataset)
     * [beforeload event listener](http://stackoverflow.com/questions/11837944/change-a-img-src-in-chrome-extension-before-the-image-has-loaded)
     * [Image to Base64 Converter](http://webcodertools.com/imagetobase64converter/Create)
-    * [parseUri](http://stevenlevithan.com/demo/parseuri/js/) Split URLs in JavaScript
-    * [Holder.js](http://imsky.github.io/holder/) image placeholders entirely on the client side
 
 ## Development process
 
-* Development
+* Local Development
     * Disable production version of TextMode if enabled from the Chrome Store
     * Edit files locally
     * Update version # in 'manifest.json'
-* Local test
+* Local QA
     * Visit locally 'chrome://extensions/'
     * Turn on `Developer mode` on the top right
     * Click `Load unpacked extension`
     * Select the 'chrome-extension' dev folder
     * Reload extension with every code update via 'Reload (⌘R)'
-* Deployment to Chrome Store
+* Publish to Chrome Store
     * ZIP the 'chrome-extension' folder
     * Upload to the developer dashboard: [https://chrome.google.com/webstore/developer/dashboard](https://chrome.google.com/webstore/developer/dashboard)
     * More details at [Publishing Your App](https://developers.google.com/chrome/web-store/docs/publish)

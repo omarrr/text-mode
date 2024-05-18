@@ -37,9 +37,8 @@
 
   "action": {
     "default_icon": {
-      "16": "imgs/icon.png",
-      "48": "imgs/icon.png",
-      "128": "imgs/icon.png"
+      "16": "imgs/icon/icon-OFF@16px.png",
+      "32": "imgs/icon/icon-OFF@32px.png"
     },
     "default_title": "Set Text Mode on/off"
   },

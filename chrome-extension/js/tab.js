@@ -19,12 +19,13 @@ let isEnabled = false;
 // let config_adjust_white_bg = false;
 // let config_img_bg_type = "stripes-50";
 
+// ————————————————————————————————————
 function getMode() {
   chrome.runtime.sendMessage({ method: "getMode" }, (response) => {
     if (chrome.runtime.lastError) {
       console.error(chrome.runtime.lastError);
     } else {
-      console.log("response", response);
+      //   console.log("response", response);
       isEnabled = response.enableAll;
       //---
       config_adjust_saturation = response.config_adjust_saturation;
@@ -45,8 +46,7 @@ function getMode() {
 
 getMode();
 
-// chrome.runtime.sendMessage({ method: "getMode", refresh: true }).then(getMode);
-
+// ————————————————————————————————————
 document.addEventListener("DOMContentLoaded", () => {
   injectCustomCSS();
   setBodyClasses();
@@ -61,12 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
 //
 const blankImg = chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
 
-// function getBlankImg() {
-//   if (chrome.runtime?.id) {
-//     return chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
-//   }
-//   return "";
-// }
 function replaceBase64Images() {
   if (isEnabled) {
     const imgs = document.querySelectorAll('img[src^="data:image/"]');
@@ -105,7 +99,7 @@ function replaceVideos() {
 //
 function observeDOMChanges() {
   const observer = new MutationObserver((mutations) => {
-    console.log("MutationObserver");
+    // console.log("MutationObserver");
     let needUpdate = false;
     mutations.forEach((mutation) => {
       if (mutation.type === "childList" && mutation.addedNodes.length) {
@@ -142,8 +136,6 @@ function injectCustomCSS() {
     }
   });
 }
-
-// document.addEventListener("DOMContentLoaded", injectCustomCSS);
 
 //------------------------------------------------
 // Set BODY type (plain_text?)

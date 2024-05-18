@@ -32,7 +32,9 @@ getOptions(() => {
   optionsForm.config_adjust_contrast_el.checked = Boolean(
     options.config_adjust_contrast
   );
-  optionsForm.adjust_white_bg_el.checked = Boolean(options.config_adjust_white_bg);
+  optionsForm.adjust_white_bg_el.checked = Boolean(
+    options.config_adjust_white_bg
+  );
   imageReplacementInputs.forEach((input) => {
     // console.log(">>>>>");
     // console.log("  input.value: " + input.value);
@@ -70,7 +72,6 @@ optionsForm.adjust_white_bg_el.addEventListener("change", (event) => {
 });
 // ————————————————————————————————————
 imageReplacementInputs.forEach((input) => {
-  console.log("imageReplacementInputs.forEach");
   input.addEventListener("change", handleImageReplacementClick);
 });
 // ————————————————————————————————————
@@ -78,8 +79,6 @@ imageReplacementInputs.forEach((input) => {
 // ————————————————————————————————————
 function handleImageReplacementClick(event) {
   getOptions(() => {
-    console.log("handleImageReplacementClick");
-
     let val = event.target.value; // eg. stripes-70
     let img_bg_use_stripes = val.indexOf("stripes") >= 0;
     let img_bg_opacity = parseInt(val.split("-")[1]);
@@ -89,7 +88,7 @@ function handleImageReplacementClick(event) {
     options.config_img_bg_use_stripes = img_bg_use_stripes;
     options.config_img_bg_opacity = img_bg_opacity;
 
-    console.log(options);
+    // console.log(options);
 
     chrome.storage.sync.set({ options });
 

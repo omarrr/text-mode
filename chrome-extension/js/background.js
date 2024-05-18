@@ -34,26 +34,20 @@ function setDefaultOptions() {
   chrome.storage.sync.set({ options });
 }
 function loadOptions(callback) {
-  console.log("loadOptions");
-  //   if (options && callback) {
-  //     callback();
-  //     return;
-  //   }
+  //   console.log("loadOptions");
   chrome.storage.sync.get("options", (data) => {
-    // const options = data.options || {};
     options = data.options || {};
     if (!data.options) {
       setDefaultOptions();
     }
     if (callback) callback();
 
-    console.log(options);
+    // console.log(options);
   });
 }
 
 self.addEventListener("install", (event) => {
-  console.log("Service Worker installing.");
-  //   loadOptions();
+  //   console.log("Service Worker installing.");
   loadOptions(() => {
     setListeners();
     updateUI();
@@ -61,8 +55,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  console.log("Service Worker activating.");
-  //   loadOptions();
+  //   console.log("Service Worker activating.");
   loadOptions(() => {
     setListeners();
     updateUI();
@@ -106,20 +99,10 @@ function refreshTab(tabId) {
 function getIsEnableAll(callback) {
   chrome.storage.sync.get("options", (data) => {
     const options = data.options || {};
-    // console.log("getIsEnableAll");
-    // console.log(options);
-    // console.log(
-    //   "options.enable_all => " +
-    //     options.enable_all +
-    //     "..." +
-    //     typeof options.enable_all
-    // );
+
     callback(options.enable_all === true);
   });
 }
-// function getIsEnableAll(callback) {
-//   callback(options.enable_all === true);
-// }
 function setIsEnableAll(enable, callback) {
   //   console.log(">>> setIsEnableAll: " + enable + "..." + typeof enable);
   chrome.storage.sync.get("options", (data) => {
@@ -130,14 +113,6 @@ function setIsEnableAll(enable, callback) {
     callback(enable);
   });
 }
-// function setIsEnableAll(enable, callback) {
-//   //   console.log(">>> setIsEnableAll: " + enable + "..." + typeof enable);
-//   options.enable_all = enable;
-//   chrome.storage.sync.set({ options });
-
-//   callback(enable);
-// }
-
 function toggleIsEnableAll() {
   getIsEnableAll((isEnabled) => {
     setIsEnableAll(!isEnabled, (isEnabled) => {
@@ -194,7 +169,7 @@ function setListeners() {
 
 const imageReplacement = chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
 function applyBlockingRules() {
-  console.log("applyBlockingRules");
+  //   console.log("applyBlockingRules");
 
   chrome.declarativeNetRequest.updateDynamicRules({
     addRules: [
@@ -228,29 +203,6 @@ function removeBlockingRules() {
 }
 
 // ————————————————————————————————————
-
-chrome.storage.onChanged.addListener(function (changes, namespace) {
-  for (let key in changes) {
-    let storageChange = changes[key];
-    // console.log(
-    //   'Storage key "%s" in namespace "%s" changed. Old value was "%s", new value is "%s".',
-    //   key, namespace, storageChange.oldValue, storageChange.newValue
-    // );
-    // Update your options configuration here based on the new value
-    if (key === "options") {
-      updateConfiguration(storageChange.newValue);
-    }
-  }
-});
-
-function updateConfiguration(newOptions) {
-  // Apply the new configuration settings from newOptions
-  console.log("Options updated to:", newOptions);
-}
-
-// ————————————————————————————————————
-// setListeners();
-// updateUI();
 
 loadOptions(() => {
   setListeners();
