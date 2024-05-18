@@ -39,6 +39,7 @@ getOptions(() => {
       input.parentElement.classList.add("selected");
     }
   });
+  setHeadClasses();
 });
 // ————————————————————————————————————
 // EVENT LISTENERS - SAVE OPTIONS
@@ -103,23 +104,22 @@ function handleImageReplacementClick(event) {
 // (See also setBodyClasses in tqb.js)
 //------------------------------------------------
 function setHeadClasses() {
-  const head = document.querySelector("#icon_right");
-  // const icon_right = document.querySelector("#icon_right");
-  // if (!head || !icon_right) return;
-  if (!head) return;
+  const icon_right = document.querySelector("#icon_right");
 
-  head.className = "";
-  // icon_right.className = "";
+  if (!icon_right) return;
 
-  head.classList.add("__text_mode_READY__");
-  head.classList.add("__text_mode_ENABLED__");
-  if (options.is_desaturated) head.classList.add("__text_mode_desaturated__");
+  icon_right.className = "";
+
+  icon_right.classList.add("__text_mode_READY__");
+  icon_right.classList.add("__text_mode_ENABLED__");
+  if (options.is_desaturated)
+    icon_right.classList.add("__text_mode_desaturated__");
   if (options.increase_contrast)
-    head.classList.add("__text_mode_increase_contrast__");
-  if (options.use_white_bg) head.classList.add("__text_mode_white_bg__");
+    icon_right.classList.add("__text_mode_increase_contrast__");
+  if (options.use_white_bg) icon_right.classList.add("__text_mode_white_bg__");
 
-  head.classList.add(`__text_mode_fg_${options.config_img_bg_opacity}__`);
+  icon_right.classList.add(`__text_mode_fg_${options.config_img_bg_opacity}__`);
   if (options.config_img_bg_use_stripes)
-    head.classList.add("__text_mode_stripes__");
-  else head.classList.add("__text_mode_solid__");
+    icon_right.classList.add("__text_mode_stripes__");
+  else icon_right.classList.add("__text_mode_solid__");
 }
