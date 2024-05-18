@@ -26,9 +26,13 @@ const imageReplacementInputs = optionsForm.querySelectorAll(
 // Initialize the form with the user's option settings
 // ————————————————————————————————————
 getOptions(() => {
-  optionsForm.desat.checked = Boolean(options.is_desaturated);
-  optionsForm.increaseContrast.checked = Boolean(options.increase_contrast);
-  optionsForm.whiteBg.checked = Boolean(options.use_white_bg);
+  optionsForm.adjust_saturation_el.checked = Boolean(
+    options.config_adjust_saturation
+  );
+  optionsForm.config_adjust_contrast_el.checked = Boolean(
+    options.config_adjust_contrast
+  );
+  optionsForm.adjust_white_bg_el.checked = Boolean(options.config_adjust_white_bg);
   imageReplacementInputs.forEach((input) => {
     // console.log(">>>>>");
     // console.log("  input.value: " + input.value);
@@ -46,20 +50,20 @@ getOptions(() => {
 // ————————————————————————————————————
 // Immediately persist options changes
 // ————————————————————————————————————
-optionsForm.desat.addEventListener("change", (event) => {
-  options.is_desaturated = event.target.checked;
+optionsForm.adjust_saturation_el.addEventListener("change", (event) => {
+  options.config_adjust_saturation = event.target.checked;
   chrome.storage.sync.set({ options });
 
   setHeadClasses();
 });
-optionsForm.increaseContrast.addEventListener("change", (event) => {
-  options.increase_contrast = event.target.checked;
+optionsForm.config_adjust_contrast_el.addEventListener("change", (event) => {
+  options.config_adjust_contrast = event.target.checked;
   chrome.storage.sync.set({ options });
 
   setHeadClasses();
 });
-optionsForm.whiteBg.addEventListener("change", (event) => {
-  options.use_white_bg = event.target.checked;
+optionsForm.adjust_white_bg_el.addEventListener("change", (event) => {
+  options.config_adjust_white_bg = event.target.checked;
   chrome.storage.sync.set({ options });
 
   setHeadClasses();
@@ -112,11 +116,12 @@ function setHeadClasses() {
 
   icon_right.classList.add("__text_mode_READY__");
   icon_right.classList.add("__text_mode_ENABLED__");
-  if (options.is_desaturated)
+  if (options.config_adjust_saturation)
     icon_right.classList.add("__text_mode_desaturated__");
-  if (options.increase_contrast)
+  if (options.config_adjust_contrast)
     icon_right.classList.add("__text_mode_increase_contrast__");
-  if (options.use_white_bg) icon_right.classList.add("__text_mode_white_bg__");
+  if (options.config_adjust_white_bg)
+    icon_right.classList.add("__text_mode_white_bg__");
 
   icon_right.classList.add(`__text_mode_fg_${options.config_img_bg_opacity}__`);
   if (options.config_img_bg_use_stripes)

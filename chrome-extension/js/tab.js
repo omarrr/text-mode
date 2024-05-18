@@ -15,9 +15,9 @@
 // Get Preferences from the Extension
 
 let isEnabled = false;
-let isDesaturated = false;
-let useWhiteBg = false;
-let config_img_bg_type = "stripes-50";
+// let config_adjust_saturation = false;
+// let config_adjust_white_bg = false;
+// let config_img_bg_type = "stripes-50";
 
 function getMode() {
   chrome.runtime.sendMessage({ method: "getMode" }, (response) => {
@@ -26,9 +26,10 @@ function getMode() {
     } else {
       console.log("response", response);
       isEnabled = response.enableAll;
-      isDesaturated = response.isDesaturated;
-      increaseContrast = response.increaseContrast;
-      useWhiteBg = response.useWhiteBg;
+      //---
+      config_adjust_saturation = response.config_adjust_saturation;
+      config_adjust_contrast = response.config_adjust_contrast;
+      config_adjust_white_bg = response.config_adjust_white_bg;
       //---
       config_img_bg_type = response.config_img_bg_type;
       config_img_bg_opacity = response.config_img_bg_opacity;
@@ -159,9 +160,11 @@ function setBodyClasses() {
   if (isEnabled) {
     body.classList.add("__text_mode_ENABLED__");
     body.classList.add(`__text_mode_img_${config_img_bg_type}__`);
-    if (isDesaturated) body.classList.add("__text_mode_desaturated__");
-    if (increaseContrast) body.classList.add("__text_mode_increase_contrast__");
-    if (useWhiteBg) body.classList.add("__text_mode_white_bg__");
+    if (config_adjust_saturation)
+      body.classList.add("__text_mode_desaturated__");
+    if (config_adjust_contrast)
+      body.classList.add("__text_mode_increase_contrast__");
+    if (config_adjust_white_bg) body.classList.add("__text_mode_white_bg__");
 
     body.classList.add(`__text_mode_fg_${config_img_bg_opacity}__`);
     if (config_img_bg_use_stripes) body.classList.add("__text_mode_stripes__");

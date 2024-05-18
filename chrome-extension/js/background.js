@@ -22,9 +22,10 @@ let options;
 function setDefaultOptions() {
   // Very first session ever running the extensions by the user
   options.enable_all = false;
-  options.is_desaturated = true;
-  options.increase_contrast = false;
-  options.use_white_bg = false;
+
+  options.config_adjust_saturation = true;
+  options.config_adjust_contrast = false;
+  options.config_adjust_white_bg = false;
 
   options.config_img_bg_type = "stripes-50";
   options.config_img_bg_use_stripes = true;
@@ -145,36 +146,6 @@ function toggleIsEnableAll() {
     });
   });
 }
-//------------------------------------------------
-// OPTIONS
-//------------------------------------------------
-// function getIsDesaturated(callback) {
-//   chrome.storage.sync.get("options", (data) => {
-//     const options = data.options || {};
-//     callback(options.is_desaturated === true);
-//   });
-// }
-// function getIncreaseContrast(callback) {
-//   chrome.storage.sync.get("options", (data) => {
-//     const options = data.options || {};
-//     callback(options.increase_contrast === true);
-//   });
-// }
-// function getUseWhiteBg(callback) {
-//   chrome.storage.sync.get("options", (data) => {
-//     const options = data.options || {};
-//     callback(options.use_white_bg === true);
-//   });
-// }
-function getIsDesaturated(callback) {
-  callback(options.is_desaturated === true);
-}
-function getIncreaseContrast(callback) {
-  callback(options.increase_contrast === true);
-}
-function getUseWhiteBg(callback) {
-  callback(options.use_white_bg === true);
-}
 
 // ————————————————————————————————————
 // Listen to calls from tab.js
@@ -187,9 +158,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       const options = data.options || {};
       const response = {
         enableAll: options.enable_all === true,
-        isDesaturated: options.is_desaturated === true,
-        increaseContrast: options.increase_contrast === true,
-        useWhiteBg: options.use_white_bg === true,
+        config_adjust_saturation: options.config_adjust_saturation === true,
+        config_adjust_contrast: options.config_adjust_contrast === true,
+        config_adjust_white_bg: options.config_adjust_white_bg === true,
         // ---
         config_img_bg_type: options.config_img_bg_type || 1,
         config_img_bg_opacity: options.config_img_bg_opacity || 50,

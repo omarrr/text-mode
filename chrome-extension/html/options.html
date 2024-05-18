@@ -21,71 +21,21 @@
           <h2>B&W Mode</h2>
           <ul id="bwMode">
             <li>
-              <input type="checkbox" id="desat" />
-              <label for="desat">Desaturate colors</label>
+              <input type="checkbox" id="adjust_saturation_el" />
+              <label for="adjust_saturation_el">Desaturate colors</label>
             </li>
             <li>
-              <input type="checkbox" id="increaseContrast" />
-              <label for="increaseContrast">Increase contrast</label>
+              <input type="checkbox" id="config_adjust_contrast_el" />
+              <label for="config_adjust_contrast_el">Increase contrast</label>
             </li>
-            <li>
-              <input type="checkbox" id="whiteBg" />
-              <label for="whiteBg">Use White Background</label>
+            <li style="display: none">
+              <input type="checkbox" id="adjust_white_bg_el" />
+              <label for="adjust_white_bg_el">Use White Background</label>
             </li>
           </ul>
         </div>
         <!-- —————————————————— -->
         <h2>Image Replacement</h2>
-        <div>
-          <ul id="imageModeSolid">
-            <li id="imageModeSolidLi0" class="__text_mode_fg_10__">
-              <input
-                type="radio"
-                id="imageModeSolidRadio0"
-                name="imageReplacement"
-                value="solid-10"
-              />
-              <label for="imageModeSolidRadio0"></label>
-            </li>
-            <li id="imageModeSolidLi1" class="__text_mode_fg_30__">
-              <input
-                type="radio"
-                id="imageModeSolidRadio1"
-                name="imageReplacement"
-                value="solid-30"
-              />
-              <label for="imageModeSolidRadio1"></label>
-            </li>
-            <li id="imageModeSolidLi2" class="__text_mode_fg_50__">
-              <input
-                type="radio"
-                id="imageModeSolidRadio2"
-                name="imageReplacement"
-                value="solid-50"
-              />
-              <label for="imageModeSolidRadio2"></label>
-            </li>
-            <li id="imageModeSolidLi3" class="__text_mode_fg_70__">
-              <input
-                type="radio"
-                id="imageModeSolidRadio3"
-                name="imageReplacement"
-                value="solid-70"
-              />
-              <label for="imageModeSolidRadio3"></label>
-            </li>
-            <li id="imageModeSolidLi4" class="__text_mode_fg_90__">
-              <input
-                type="radio"
-                id="imageModeSolidRadio4"
-                name="imageReplacement"
-                value="solid-90"
-              />
-              <label for="imageModeSolidRadio4"></label>
-            </li>
-          </ul>
-        </div>
-        <!-- —————————————————— -->
         <div>
           <ul id="imageModeStripes" class="__text_mode_READY__">
             <li id="imageModeStripesLi0" class="__text_mode_fg_10__">
@@ -132,6 +82,56 @@
                 value="stripes-90"
               />
               <label for="imageModeStripesRadio4"></label>
+            </li>
+          </ul>
+        </div>
+        <!-- —————————————————— -->
+        <div>
+          <ul id="imageModeSolid">
+            <li id="imageModeSolidLi0" class="__text_mode_fg_10__">
+              <input
+                type="radio"
+                id="imageModeSolidRadio0"
+                name="imageReplacement"
+                value="solid-10"
+              />
+              <label for="imageModeSolidRadio0"></label>
+            </li>
+            <li id="imageModeSolidLi1" class="__text_mode_fg_30__">
+              <input
+                type="radio"
+                id="imageModeSolidRadio1"
+                name="imageReplacement"
+                value="solid-30"
+              />
+              <label for="imageModeSolidRadio1"></label>
+            </li>
+            <li id="imageModeSolidLi2" class="__text_mode_fg_50__">
+              <input
+                type="radio"
+                id="imageModeSolidRadio2"
+                name="imageReplacement"
+                value="solid-50"
+              />
+              <label for="imageModeSolidRadio2"></label>
+            </li>
+            <li id="imageModeSolidLi3" class="__text_mode_fg_70__">
+              <input
+                type="radio"
+                id="imageModeSolidRadio3"
+                name="imageReplacement"
+                value="solid-70"
+              />
+              <label for="imageModeSolidRadio3"></label>
+            </li>
+            <li id="imageModeSolidLi4" class="__text_mode_fg_90__">
+              <input
+                type="radio"
+                id="imageModeSolidRadio4"
+                name="imageReplacement"
+                value="solid-90"
+              />
+              <label for="imageModeSolidRadio4"></label>
             </li>
           </ul>
         </div>
