@@ -14,30 +14,59 @@
 *************************************************/
 
 //————————————————————————————————————
-//
+// OPTIONS (AKA Config)
 //————————————————————————————————————
+
+let options;
+
 function setDefaultOptions() {
+  // Very first session ever running the extensions by the user
+  options.enable_all = false;
+  options.replacement_image = 1;
+  options.is_desaturated = true;
+  options.increase_contrast = false;
+  options.use_white_bg = false;
+
+  //   options.replacement_image = event.target.value;
+  options.config_img_bg_use_stripes = true;
+  options.config_img_bg_opacity = 50;
+
+  chrome.storage.sync.set({ options });
+}
+function loadOptions(callback) {
+  console.log("loadOptions");
+  //   if (options && callback) {
+  //     callback();
+  //     return;
+  //   }
   chrome.storage.sync.get("options", (data) => {
-    const options = data.options || {};
+    // const options = data.options || {};
+    options = data.options || {};
     if (!data.options) {
-      options.enable_all = false;
-      options.replacement_image = 1;
-      options.is_desaturated = true;
-      options.increase_contrast = false;
-      options.use_white_bg = false;
-      chrome.storage.sync.set({ options });
+      setDefaultOptions();
     }
+    if (callback) callback();
+
+    console.log(options);
   });
 }
 
 self.addEventListener("install", (event) => {
   console.log("Service Worker installing.");
-  setDefaultOptions();
+  //   loadOptions();
+  loadOptions(() => {
+    setListeners();
+    updateUI();
+  });
 });
 
 self.addEventListener("activate", (event) => {
   console.log("Service Worker activating.");
-  setDefaultOptions();
+  //   loadOptions();
+  loadOptions(() => {
+    setListeners();
+    updateUI();
+  });
 });
 
 //------------------------------------------------
@@ -74,31 +103,39 @@ function refreshTab(tabId) {
 //------------------------------------------------
 // ENABLE / DISABLE Mode
 //------------------------------------------------
+// function getIsEnableAll(callback) {
+//   chrome.storage.sync.get("options", (data) => {
+//     const options = data.options || {};
+//     // console.log("getIsEnableAll");
+//     // console.log(options);
+//     // console.log(
+//     //   "options.enable_all => " +
+//     //     options.enable_all +
+//     //     "..." +
+//     //     typeof options.enable_all
+//     // );
+//     callback(options.enable_all === true);
+//   });
+// }
 function getIsEnableAll(callback) {
-  chrome.storage.sync.get("options", (data) => {
-    const options = data.options || {};
-    // console.log("getIsEnableAll");
-    // console.log(options);
-    // console.log(
-    //   "options.enable_all => " +
-    //     options.enable_all +
-    //     "..." +
-    //     typeof options.enable_all
-    // );
-    callback(options.enable_all === true);
-  });
+  callback(options.enable_all === true);
 }
+// function setIsEnableAll(enable, callback) {
+//   //   console.log(">>> setIsEnableAll: " + enable + "..." + typeof enable);
+//   chrome.storage.sync.get("options", (data) => {
+//     const options = data.options || {};
+//     options.enable_all = enable;
+//     chrome.storage.sync.set({ options });
 
+//     callback(enable);
+//   });
+// }
 function setIsEnableAll(enable, callback) {
   //   console.log(">>> setIsEnableAll: " + enable + "..." + typeof enable);
+  options.enable_all = enable;
+  chrome.storage.sync.set({ options });
 
-  chrome.storage.sync.get("options", (data) => {
-    const options = data.options || {};
-    options.enable_all = enable;
-    chrome.storage.sync.set({ options });
-
-    callback(enable);
-  });
+  callback(enable);
 }
 
 function toggleIsEnableAll() {
@@ -112,23 +149,32 @@ function toggleIsEnableAll() {
 //------------------------------------------------
 // OPTIONS
 //------------------------------------------------
+// function getIsDesaturated(callback) {
+//   chrome.storage.sync.get("options", (data) => {
+//     const options = data.options || {};
+//     callback(options.is_desaturated === true);
+//   });
+// }
+// function getIncreaseContrast(callback) {
+//   chrome.storage.sync.get("options", (data) => {
+//     const options = data.options || {};
+//     callback(options.increase_contrast === true);
+//   });
+// }
+// function getUseWhiteBg(callback) {
+//   chrome.storage.sync.get("options", (data) => {
+//     const options = data.options || {};
+//     callback(options.use_white_bg === true);
+//   });
+// }
 function getIsDesaturated(callback) {
-  chrome.storage.sync.get("options", (data) => {
-    const options = data.options || {};
-    callback(options.is_desaturated === true);
-  });
+  callback(options.is_desaturated === true);
 }
 function getIncreaseContrast(callback) {
-  chrome.storage.sync.get("options", (data) => {
-    const options = data.options || {};
-    callback(options.increase_contrast === true);
-  });
+  callback(options.increase_contrast === true);
 }
 function getUseWhiteBg(callback) {
-  chrome.storage.sync.get("options", (data) => {
-    const options = data.options || {};
-    callback(options.use_white_bg === true);
-  });
+  callback(options.use_white_bg === true);
 }
 
 // ————————————————————————————————————
@@ -176,8 +222,11 @@ function setListeners() {
   });
 }
 
+const imageReplacement = chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
 function applyBlockingRules() {
-  var imageReplacement = chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
+  //   var imageReplacement = chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
+
+  console.log("applyBlockingRules");
 
   chrome.declarativeNetRequest.updateDynamicRules({
     addRules: [
@@ -195,10 +244,7 @@ function applyBlockingRules() {
             "image",
             "object",
             "media",
-            //   "xmlhttprequest",
-            //   "websocket",
-            //   "other",
-            //   "sub_frame",
+            //   "xmlhttprequest","websocket","other","sub_frame",
           ],
         },
       },
@@ -213,5 +259,32 @@ function removeBlockingRules() {
   });
 }
 
-setListeners();
-updateUI();
+// ————————————————————————————————————
+
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+  for (let key in changes) {
+    let storageChange = changes[key];
+    // console.log(
+    //   'Storage key "%s" in namespace "%s" changed. Old value was "%s", new value is "%s".',
+    //   key, namespace, storageChange.oldValue, storageChange.newValue
+    // );
+    // Update your options configuration here based on the new value
+    if (key === "options") {
+      updateConfiguration(storageChange.newValue);
+    }
+  }
+});
+
+function updateConfiguration(newOptions) {
+  // Apply the new configuration settings from newOptions
+  console.log("Options updated to:", newOptions);
+}
+
+// ————————————————————————————————————
+// setListeners();
+// updateUI();
+
+loadOptions(() => {
+  setListeners();
+  updateUI();
+});

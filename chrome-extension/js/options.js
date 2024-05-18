@@ -3,7 +3,7 @@
 // ————————————————————————————————————
 // In-page cache of the user's options
 // ————————————————————————————————————
-const options = {};
+let options = {};
 const optionsForm = document.getElementById("optionsForm");
 
 // ————————————————————————————————————

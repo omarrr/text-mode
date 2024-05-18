@@ -20,7 +20,7 @@ let isDesaturated = false;
 let useWhiteBg = false;
 
 function getMode() {
-  return new Promise((resolve) => {
+  return new Promise((callback) => {
     chrome.runtime.sendMessage({ method: "getMode" }, (response) => {
       if (chrome.runtime.lastError) {
         console.error(chrome.runtime.lastError);
@@ -37,7 +37,7 @@ function getMode() {
 
         setBodyClasses();
       }
-      resolve();
+      callback();
     });
   });
 }
