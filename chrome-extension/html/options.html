@@ -2,10 +2,10 @@
 <html>
   <head>
     <title>Text Mode</title>
-    <script src="../js/vendor/holder.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/tab.css" />
     <link rel="stylesheet" type="text/css" href="../css/options.css" />
   </head>
-  <body class="__plain_text_whitelisted__">
+  <body class="__text_mode_READY__ __text_mode_whitelisted__">
     <form id="optionsForm">
       <div id="wrapper">
         <div id="head">
@@ -16,75 +16,120 @@
           <ul id="bgMode">
             <li>
               <input type="checkbox" id="desat" />
-              <label for="desat">Desaturate colors:</label>
+              <label for="desat">Desaturate colors</label>
             </li>
             <li>
               <input type="checkbox" id="increaseContrast" />
-              <label for="increaseContrast">Increase contrast:</label>
+              <label for="increaseContrast">Increase contrast</label>
             </li>
             <li>
               <input type="checkbox" id="whiteBg" />
-              <label for="whiteBg">Use White Background:</label>
+              <label for="whiteBg">Use White Background</label>
             </li>
           </ul>
         </div>
+        <!-- —————————————————— -->
+        <h2>Image Replacement Solid</h2>
         <div>
-          <h2>Image Replacement</h2>
-          <ul id="imageReplacement">
-            <li>
+          <ul id="imageModeSolid">
+            <li id="imageModeSolidLi0">
               <input
                 type="radio"
-                id="imgRep0"
+                id="imageModeSolidRadio0"
                 name="imageReplacement"
-                value="0"
+                value="solid-10"
               />
-              <label for="imgRep0">
-                <!-- <img src="../js/vendor/holder.js/100x100/"/> -->
-                <img src="../imgs/bg/bg_grey_90.png" />
-              </label>
+              <label for="imageModeSolidRadio0"></label>
             </li>
-            <li>
+            <li id="imageModeSolidLi1">
               <input
                 type="radio"
-                id="imgRep1"
+                id="imageModeSolidRadio1"
                 name="imageReplacement"
-                value="1"
+                value="solid-30"
               />
-              <label for="imgRep1"
-                ><img src="../imgs/bg/bg_grey_75.png"
-              /></label>
+              <label for="imageModeSolidRadio1"></label>
             </li>
-            <li>
+            <li id="imageModeSolidLi2">
               <input
                 type="radio"
-                id="imgRep2"
+                id="imageModeSolidRadio2"
                 name="imageReplacement"
-                value="2"
+                value="solid-50"
               />
-              <label for="imgRep2"
-                ><img src="../imgs/bg/bg_grey_50.png"
-              /></label>
+              <label for="imageModeSolidRadio2"></label>
             </li>
-            <li>
+            <li id="imageModeSolidLi3">
               <input
                 type="radio"
-                id="imgRep3"
+                id="imageModeSolidRadio3"
                 name="imageReplacement"
-                value="3"
+                value="solid-70"
               />
-              <label for="imgRep3"><img src="../imgs/bg/bg_3.png" /></label>
+              <label for="imageModeSolidRadio3"></label>
             </li>
-            <li>
+            <li id="imageModeSolidLi4">
               <input
                 type="radio"
-                id="imgRep4"
+                id="imageModeSolidRadio4"
                 name="imageReplacement"
-                value="4"
+                value="solid-90"
               />
-              <label for="imgRep4"><img src="../imgs/bg/bg_4.png" /></label>
+              <label for="imageModeSolidRadio4"></label>
             </li>
           </ul>
         </div>
+        <!-- —————————————————— -->
+        <div>
+          <ul id="imageModeStripes">
+            <li id="imageModeStripesLi0">
+              <input
+                type="radio"
+                id="imageModeStripesRadio0"
+                name="imageReplacement"
+                value="stripes-10"
+              />
+              <label for="imageModeStripesRadio0"></label>
+            </li>
+            <li id="imageModeStripesLi1">
+              <input
+                type="radio"
+                id="imageModeStripesRadio1"
+                name="imageReplacement"
+                value="stripes-30"
+              />
+              <label for="imageModeStripesRadio1"></label>
+            </li>
+            <li id="imageModeStripesLi2">
+              <input
+                type="radio"
+                id="imageModeStripesRadio2"
+                name="imageReplacement"
+                value="stripes-50"
+              />
+              <label for="imageModeStripesRadio2"></label>
+            </li>
+            <li id="imageModeStripesLi3">
+              <input
+                type="radio"
+                id="imageModeStripesRadio3"
+                name="imageReplacement"
+                value="stripes-70"
+              />
+              <label for="imageModeStripesRadio3"></label>
+            </li>
+            <li id="imageModeStripesLi4">
+              <input
+                type="radio"
+                id="imageModeStripesRadio4"
+                name="imageReplacement"
+                value="stripes-90"
+              />
+              <label for="imageModeStripesRadio4"></label>
+            </li>
+          </ul>
+        </div>
+        <!-- —————————————————— -->
       </div>
     </form>
     <script src="../js/options.js"></script>

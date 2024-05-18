@@ -1,8 +1,12 @@
-* {
-  /*background-image: none !important;*/
+/* —————————————————— */
+/* GLOBAL ——————————— */
+/* —————————————————— */
+.__text_mode_ENABLED__ {
 }
-.__plain_text__ {
-}
+
+/* ———————————————————————————————————— */
+/* B&W Mode - Page level fix ——————————— */
+/* ———————————————————————————————————— */
 .__text_mode_white_bg__ {
   background-color: #f9f9f9 !important;
 }
@@ -16,64 +20,159 @@
   -webkit-filter: contrast(200%) grayscale(100%) !important;
 }
 
-.__plain_text__ [style*="background-image"],
-.__plain_text__ [style*="background-image: url"],
-.__plain_text__ [style*="background: url"] {
+/* ———————————————————————————————————— */
+/* BG IMAGES - Prepare ——————————— */
+/* ———————————————————————————————————— */
+.__text_mode_ENABLED__ [style*="background-image"],
+.__text_mode_ENABLED__ [style*="background-image: url"],
+.__text_mode_ENABLED__ [style*="background: url"] {
   background-size: auto !important;
   background-repeat: repeat !important;
 }
 
-.__plain_text__ img,
-/* .__plain_text__ svg, */
-.__plain_text__ canvas,
-.__plain_text__ video,
-.__plain_text__ object,
-.__plain_text__ embed,
-.__plain_text__ applet image,
-.__plain_text__ video,
-.__plain_text__ .custom-background-class {
-  /* outline: 4px solid red;
-  outline-offset: -4px; */
+/* ———————————————————————————————————— */
+/* IMAGES + BG Images - Replace w/ pattern */
+/* ———————————————————————————————————— */
 
-  background: repeating-linear-gradient(
+:root {
+  --text-mode-opacity-0: 0;
+  --text-mode-opacity-10: 0.1;
+  --text-mode-opacity-30: 0.3;
+  --text-mode-opacity-50: 0.5;
+  --text-mode-opacity-70: 0.7;
+  --text-mode-opacity-90: 0.9;
+
+  --text-mode-bg-opacity: var(--text-mode-opacity-0);
+}
+
+/* ———————————————————————————————————— */
+/* VARIANTS */
+/* ———————————————————————————————————— */
+.__text_mode_fg_10__ {
+  --text-mode-fg-opacity: var(--text-mode-opacity-10);
+  --text-mode-filter: contrast(0) brightness(1.8);
+}
+.__text_mode_fg_30__ {
+  --text-mode-fg-opacity: var(--text-mode-opacity-30);
+  --text-mode-filter: contrast(0) brightness(1.4);
+}
+.__text_mode_fg_50__ {
+  --text-mode-fg-opacity: var(--text-mode-opacity-50);
+  --text-mode-filter: contrast(0) brightness(1);
+}
+.__text_mode_fg_70__ {
+  --text-mode-fg-opacity: var(--text-mode-opacity-70);
+  --text-mode-filter: contrast(0) brightness(0.6);
+}
+.__text_mode_fg_90__ {
+  --text-mode-fg-opacity: var(--text-mode-opacity-90);
+  --text-mode-filter: contrast(0) brightness(0.2);
+}
+
+/* ———————————————————————————————————— */
+/* BG + FG as f(variants) */
+/* ———————————————————————————————————— */
+
+.__text_mode_READY__ {
+  --text-mode-fg-color: rgba(
+    255,
+    170,
+    0,
+    var(--text-mode-fg-opacity)
+  ); /* #fa3 #000f */
+  --text-mode-fg-color: rgba(
+    0,
+    0,
+    0,
+    var(--text-mode-fg-opacity)
+  ); /* #fa3 #000f */
+  --text-mode-bg-color: rgba(
+    0,
+    0,
+    0,
+    var(--text-mode-bg-opacity)
+  ); /* #000 #0000 */
+  --text-mode-stripe-width: 5px; /* 5px 10px */
+
+  --text-mode-bg-striped: repeating-linear-gradient(
     -45deg,
-    #000f,
-    #000f 10px,
-    #fff0 10px,
-    #fff0 20px
-  ) !important;
-}
-/* .__plain_text_READY__ img,
-.__plain_text_READY__ svg,
-.__plain_text_READY__ canvas,
-.__plain_text_READY__ video,
-.__plain_text_READY__ object,
-.__plain_text_READY__ embed,
-.__plain_text_READY__ applet image,
-.__plain_text_READY__ video, */
-.__plain_text__ svg,
-.__plain_text__ video {
-  filter: contrast(0) brightness(1.5);
-  /* filter: contrast(0) brightness(0); */
+    var(--text-mode-fg-color),
+    var(--text-mode-fg-color) var(--text-mode-stripe-width),
+    var(--text-mode-bg-color) var(--text-mode-stripe-width),
+    var(--text-mode-bg-color) calc(var(--text-mode-stripe-width) * 2)
+  );
 }
 
-/* .__plain_text__ svg {
-  border: 10px solid red;
-} */
-/* .__plain_text__ svg * {
-  display: none;
-} */
+.__text_mode_ENABLED__.__text_mode_stripes__ img,
+/* .__text_mode_ENABLED__.__text_mode_stripes__ svg, */
+.__text_mode_ENABLED__.__text_mode_stripes__ canvas,
+.__text_mode_ENABLED__.__text_mode_stripes__ video,
+.__text_mode_ENABLED__.__text_mode_stripes__ object,
+.__text_mode_ENABLED__.__text_mode_stripes__ embed,
+.__text_mode_ENABLED__.__text_mode_stripes__ applet image,
+.__text_mode_ENABLED__.__text_mode_stripes__ video,
+.__text_mode_ENABLED__.__text_mode_stripes__ .__text_mode_custom_bg__ {
+  background: var(--text-mode-bg-striped) !important;
+}
+.__text_mode_ENABLED__.__text_mode_solid__ img,
+/* .__text_mode_ENABLED__.__text_mode_solid__ svg, */
+.__text_mode_ENABLED__.__text_mode_solid__ canvas,
+.__text_mode_ENABLED__.__text_mode_solid__ video,
+.__text_mode_ENABLED__.__text_mode_solid__ object,
+.__text_mode_ENABLED__.__text_mode_solid__ embed,
+.__text_mode_ENABLED__.__text_mode_solid__ applet image,
+.__text_mode_ENABLED__.__text_mode_solid__ video,
+.__text_mode_ENABLED__.__text_mode_solid__ .__text_mode_custom_bg__ {
+  /* background: var(--text-mode-bg-striped) !important; */
+  background-color: var(--text-mode-fg-color) !important;
+}
+
+.__text_mode_ENABLED__ img,
+/* .__text_mode_ENABLED__ svg, */
+.__text_mode_ENABLED__ canvas,
+.__text_mode_ENABLED__ video,
+.__text_mode_ENABLED__ object,
+.__text_mode_ENABLED__ embed,
+.__text_mode_ENABLED__ applet image,
+.__text_mode_ENABLED__ video,
+.__text_mode_ENABLED__ .__text_mode_custom_bg__ {
+  /* background: repeating-linear-gradient(
+    -45deg,
+    var(--text-mode-fg-color),
+    var(--text-mode-fg-color) var(--text-mode-stripe-width),
+    var(--text-mode-bg-color) var(--text-mode-stripe-width),
+    var(--text-mode-bg-color) calc(var(--text-mode-stripe-width) * 2)
+  ) !important; */
+
+  /* background-color: var(--text-mode-bg-striped); */
+
+  /* background: var(--text-mode-bg-striped); */
+
+  /* opacity: 0.5; */
+}
+/* .__text_mode_READY__ img,
+.__text_mode_READY__ svg,
+.__text_mode_READY__ canvas,
+.__text_mode_READY__ video,
+.__text_mode_READY__ object,
+.__text_mode_READY__ embed,
+.__text_mode_READY__ applet image,
+.__text_mode_READY__ video, */
+.__text_mode_ENABLED__ svg,
+.__text_mode_ENABLED__ video {
+  filter: var(--text-mode-filter);
+}
 
 /* —————————————————— */
 
-.__plain_text_READY__ img,
-.__plain_text_READY__ svg,
-.__plain_text_READY__ canvas,
-.__plain_text_READY__ video,
-.__plain_text_READY__ object,
-.__plain_text_READY__ embed,
-.__plain_text_READY__ applet image,
-.__plain_text_READY__ video {
+.__text_mode_READY__ img,
+.__text_mode_READY__ svg,
+.__text_mode_READY__ canvas,
+.__text_mode_READY__ video,
+.__text_mode_READY__ object,
+.__text_mode_READY__ embed,
+.__text_mode_READY__ applet image,
+.__text_mode_READY__ video {
   /* background: repeating-linear-gradient(
     -45deg,
     #000f,
@@ -81,29 +180,4 @@
     #fff0 10px,
     #fff0 20px
   ) !important; */
-}
-
-.__plain_text_READY__ img::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: inherit; /* Takes the background color from the img element */
-  opacity: 1; /* Fully opaque to cover the image */
-}
-
-.__text_mode_img_1__ img,
-.__text_mode_img_1__ svg,
-.__text_mode_img_1__ canvas,
-.__text_mode_img_1__ video,
-.__text_mode_img_1__ object,
-.__text_mode_img_1__ iframe,
-.__text_mode_img_1__ embed,
-.__text_mode_img_1__ applet {
-  /* content: url('${chrome.runtime.getURL("imgs/bg/bg_blank_1px.png")}');
-  background-image: url("${chrome.runtime.getURL(url)}") !important;
-  background-repeat: repeat !important;
-  background-size: unset !important; */
 }

@@ -44,24 +44,137 @@ h2 {
   display: block;
 }
 
+/* ———————————————————————————————————— */
 /* IMG SELECTOR */
-ul {
+/* ———————————————————————————————————— */
+/* ul  */
+#imageModeSolid,
+#imageModeStripes,
+#imageReplacement {
   margin: 0px;
   padding: 0px;
 }
-#imageReplacement li {
+/* #imageReplacement li {
   display: inline;
-  /* display: inline-block; */
+} */
+#imageModeSolid li,
+#imageModeStripes li,
+#imageReplacement li {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin: 5px;
 }
+#imageModeSolid li input,
+#imageModeStripes li input,
 #imageReplacement li input {
   display: none;
 }
-#imageReplacement li img {
-  padding: 5px;
+
+#imageModeSolid li label,
+#imageModeStripes li label,
+#imageReplacement li label {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
+/* #imageReplacement li img {
+  padding: 5px;
+} */
+
+#imageModeSolid .selected,
+#imageModeStripes .selected,
 #imageReplacement .selected img {
-  /* padding: 4px; */
-  /* border: 2px solid #f00; */
+  box-shadow: inset 0 0 0 4px #777, inset 0 0 0 6px #fff;
+}
+
+/* —————————————————— */
+/* #imageModeSolid,
+#imageModeStripes {
+  margin: 0px;
+  padding: 0px;
+} */
+/* #imageModeSolid li,
+#imageModeStripes li {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  padding: 5px;
+} */
+/* #imageModeSolid li input,
+#imageModeStripes li input {
+  display: none;
+} */
+/* #imageModeSolid .selected,
+#imageModeStripes .selected {
   outline: 4px solid #666666;
   outline-offset: -2px;
+} */
+
+/* ———————————————————————————————————— */
+/* Gradient color/opacity */
+/* ———————————————————————————————————— */
+#imageModeSolidLi0,
+#imageModeStripesLi0 {
+  --text-mode-fg-opacity: var(--text-mode-opacity-10); /* 1 */
+  --text-mode-bg-opacity: var(--text-mode-opacity-0); /* 0 */
+}
+#imageModeSolidLi1,
+#imageModeStripesLi1 {
+  --text-mode-fg-opacity: var(--text-mode-opacity-30); /* 1 */
+  --text-mode-bg-opacity: var(--text-mode-opacity-0); /* 0 */
+}
+#imageModeSolidLi2,
+#imageModeStripesLi2 {
+  --text-mode-fg-opacity: var(--text-mode-opacity-50); /* 1 */
+  --text-mode-bg-opacity: var(--text-mode-opacity-0); /* 0 */
+}
+#imageModeSolidLi3,
+#imageModeStripesLi3 {
+  --text-mode-fg-opacity: var(--text-mode-opacity-70); /* 1 */
+  --text-mode-bg-opacity: var(--text-mode-opacity-0); /* 0 */
+}
+#imageModeSolidLi4,
+#imageModeStripesLi4 {
+  --text-mode-fg-opacity: var(--text-mode-opacity-90); /* 1 */
+  --text-mode-bg-opacity: var(--text-mode-opacity-0); /* 0 */
+}
+#imageModeSolidLi0,
+#imageModeSolidLi1,
+#imageModeSolidLi2,
+#imageModeSolidLi3,
+#imageModeSolidLi4,
+#imageModeStripesLi0,
+#imageModeStripesLi1,
+#imageModeStripesLi2,
+#imageModeStripesLi3,
+#imageModeStripesLi4 {
+  /* FG yellow: #fa3 or rgba(255, 170, 0) */
+  /* FG black: #000f */
+  --text-mode-fg-color: rgba(255, 170, 0, var(--text-mode-fg-opacity));
+  --text-mode-fg-color: rgba(0, 0, 0, var(--text-mode-fg-opacity));
+  --text-mode-bg-color: rgba(0, 0, 0, var(--text-mode-bg-opacity));
+}
+/* ———————————————————————————————————— */
+/* Solid vs Stripes */
+/* ———————————————————————————————————— */
+#imageModeSolidLi0,
+#imageModeSolidLi1,
+#imageModeSolidLi2,
+#imageModeSolidLi3,
+#imageModeSolidLi4 {
+  background: var(--text-mode-fg-color) !important;
+}
+#imageModeStripesLi0,
+#imageModeStripesLi1,
+#imageModeStripesLi2,
+#imageModeStripesLi3,
+#imageModeStripesLi4 {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--text-mode-fg-color),
+    var(--text-mode-fg-color) var(--text-mode-stripe-width),
+    var(--text-mode-bg-color) var(--text-mode-stripe-width),
+    var(--text-mode-bg-color) calc(var(--text-mode-stripe-width) * 2)
+  ) !important;
 }
