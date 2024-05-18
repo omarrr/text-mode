@@ -20,29 +20,31 @@ let useWhiteBg = false;
 let config_img_bg_type = "stripes-50";
 
 function getMode() {
-  return new Promise((callback) => {
-    chrome.runtime.sendMessage({ method: "getMode" }, (response) => {
-      if (chrome.runtime.lastError) {
-        console.error(chrome.runtime.lastError);
-      } else {
-        console.log("response", response);
-        isEnabled = response.enableAll;
-        isDesaturated = response.isDesaturated;
-        increaseContrast = response.increaseContrast;
-        useWhiteBg = response.useWhiteBg;
-        //---
-        config_img_bg_type = response.config_img_bg_type;
-        config_img_bg_opacity = response.config_img_bg_opacity;
-        config_img_bg_use_stripes = response.config_img_bg_use_stripes;
+  chrome.runtime.sendMessage({ method: "getMode" }, (response) => {
+    if (chrome.runtime.lastError) {
+      console.error(chrome.runtime.lastError);
+    } else {
+      console.log("response", response);
+      isEnabled = response.enableAll;
+      isDesaturated = response.isDesaturated;
+      increaseContrast = response.increaseContrast;
+      useWhiteBg = response.useWhiteBg;
+      //---
+      config_img_bg_type = response.config_img_bg_type;
+      config_img_bg_opacity = response.config_img_bg_opacity;
+      config_img_bg_use_stripes = response.config_img_bg_use_stripes;
 
-        setBodyClasses();
-      }
-      callback();
-    });
+      injectCustomCSS();
+      setBodyClasses();
+      replaceBase64Images();
+      replaceVideos();
+    }
   });
 }
 
 getMode();
+
+// chrome.runtime.sendMessage({ method: "getMode", refresh: true }).then(getMode);
 
 document.addEventListener("DOMContentLoaded", () => {
   injectCustomCSS();
@@ -53,17 +55,15 @@ document.addEventListener("DOMContentLoaded", () => {
   observeDOMChanges();
 });
 
-chrome.runtime.sendMessage({ method: "getMode", refresh: true }).then(getMode);
-
 // ————————————————————————————————————
 // Images + Videos
 //
 const blankImg = chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
+
 // function getBlankImg() {
 //   if (chrome.runtime?.id) {
 //     return chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
 //   }
-
 //   return "";
 // }
 function replaceBase64Images() {
