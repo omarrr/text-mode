@@ -27,7 +27,7 @@
       "css": ["css/tab.css"],
       "__css_comment": "These are injected in the order they appear in this array, before any DOM is constructed or displayed for the page.",
 
-      "js": ["js/vendor/parseuri.js", "js/tab.js"],
+      "js": ["js/tab.js"],
       "run_at": "document_start",
       "__js_comment": "In the case of 'document_end', the files are injected immediately after the DOM is complete, but before subresources like images and frames have loaded. In the case of 'document_start', the files are injected after any files from css, but before any other DOM is constructed or any other script is run.",
 

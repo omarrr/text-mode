@@ -51,22 +51,27 @@
 .__text_mode_fg_10__ {
   --text-mode-fg-opacity: var(--text-mode-opacity-10);
   --text-mode-filter: contrast(0) brightness(1.8);
+  --text-mode-stripe-width: 5px; /* 5px 10px */
 }
 .__text_mode_fg_30__ {
   --text-mode-fg-opacity: var(--text-mode-opacity-30);
   --text-mode-filter: contrast(0) brightness(1.4);
+  --text-mode-stripe-width: 6px; /* 5px 10px */
 }
 .__text_mode_fg_50__ {
   --text-mode-fg-opacity: var(--text-mode-opacity-50);
   --text-mode-filter: contrast(0) brightness(1);
+  --text-mode-stripe-width: 7px; /* 5px 10px */
 }
 .__text_mode_fg_70__ {
   --text-mode-fg-opacity: var(--text-mode-opacity-70);
   --text-mode-filter: contrast(0) brightness(0.6);
+  --text-mode-stripe-width: 8px; /* 5px 10px */
 }
 .__text_mode_fg_90__ {
   --text-mode-fg-opacity: var(--text-mode-opacity-90);
   --text-mode-filter: contrast(0) brightness(0.2);
+  --text-mode-stripe-width: 10px; /* 5px 10px */
 }
 
 /* ———————————————————————————————————— */
@@ -92,7 +97,7 @@
     0,
     var(--text-mode-bg-opacity)
   ); /* #000 #0000 */
-  --text-mode-stripe-width: 5px; /* 5px 10px */
+  /* --text-mode-stripe-width: 10px; */
 
   --text-mode-bg-striped: repeating-linear-gradient(
     -45deg,

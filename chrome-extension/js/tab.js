@@ -15,9 +15,9 @@
 // Get Preferences from the Extension
 
 let isEnabled = false;
-let replacementImageID = 0;
 let isDesaturated = false;
 let useWhiteBg = false;
+let config_img_bg_type = "stripes-50";
 
 function getMode() {
   return new Promise((callback) => {
@@ -27,11 +27,11 @@ function getMode() {
       } else {
         console.log("response", response);
         isEnabled = response.enableAll;
-        replacementImageID = parseInt(response.replacementImageID);
         isDesaturated = response.isDesaturated;
         increaseContrast = response.increaseContrast;
         useWhiteBg = response.useWhiteBg;
         //---
+        config_img_bg_type = response.config_img_bg_type;
         config_img_bg_opacity = response.config_img_bg_opacity;
         config_img_bg_use_stripes = response.config_img_bg_use_stripes;
 
@@ -158,7 +158,7 @@ function setBodyClasses() {
 
   if (isEnabled) {
     body.classList.add("__text_mode_ENABLED__");
-    body.classList.add(`__text_mode_img_${replacementImageID}__`);
+    body.classList.add(`__text_mode_img_${config_img_bg_type}__`);
     if (isDesaturated) body.classList.add("__text_mode_desaturated__");
     if (increaseContrast) body.classList.add("__text_mode_increase_contrast__");
     if (useWhiteBg) body.classList.add("__text_mode_white_bg__");

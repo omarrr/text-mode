@@ -16,9 +16,9 @@ chrome.storage.sync.get("options", (data) => {
   imageReplacementInputs.forEach((input) => {
     // console.log(">>>>>");
     // console.log("  input.value: " + input.value);
-    // console.log("  options.replacement_image: " + options.replacement_image);
+    // console.log("  options.config_img_bg_type: " + options.config_img_bg_type);
 
-    if (input.value === options.replacement_image) {
+    if (input.value === options.config_img_bg_type) {
       input.checked = true;
       input.parentElement.classList.add("selected");
     }
@@ -62,7 +62,7 @@ function handleImageReplacementClick(event) {
   let img_bg_opacity = parseInt(val.split("-")[1]);
   // let img_bg_opacity = parseInt(val.split("-")[1]) / 100; // Converts "70" to 0.7 or "50" to 0.5
 
-  options.replacement_image = event.target.value;
+  options.config_img_bg_type = event.target.value;
   options.config_img_bg_use_stripes = img_bg_use_stripes;
   options.config_img_bg_opacity = img_bg_opacity;
 
@@ -74,4 +74,29 @@ function handleImageReplacementClick(event) {
   imageReplacementInputs.forEach((input) => {
     input.parentElement.classList.toggle("selected", input.checked);
   });
+
+  setHeadClasses();
+}
+
+//------------------------------------------------
+// Set HEAD classes
+// (See also setBodyClasses in tqb.js)
+//------------------------------------------------
+function setHeadClasses() {
+  const head = document.querySelector("#head");
+  if (!head) return;
+
+  head.className = "";
+
+  head.classList.add("__text_mode_READY__");
+  head.classList.add("__text_mode_ENABLED__");
+  if (options.is_desaturated) head.classList.add("__text_mode_desaturated__");
+  if (options.increase_contrast)
+    head.classList.add("__text_mode_increase_contrast__");
+  if (options.use_white_bg) head.classList.add("__text_mode_white_bg__");
+
+  head.classList.add(`__text_mode_fg_${options.config_img_bg_opacity}__`);
+  if (options.config_img_bg_use_stripes)
+    head.classList.add("__text_mode_stripes__");
+  else head.classList.add("__text_mode_solid__");
 }

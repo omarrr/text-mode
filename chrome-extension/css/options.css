@@ -30,8 +30,7 @@ body {
 /* TITLES */
 /* ———————————————————————————————————— */
 h1 {
-  font-size: 16px;
-  font-size: 22px;
+  font-size: 22px; /* 16px */
   margin: 10px 0px 30px 0px;
 }
 h2 {
@@ -42,14 +41,26 @@ h2 {
 /* ———————————————————————————————————— */
 /* IMG SELECTOR */
 /* ———————————————————————————————————— */
-#bwMode,
+#bwMode {
+  margin: 0px;
+  padding: 0px;
+  li {
+    display: block;
+  }
+}
 #imageModeSolid,
 #imageModeStripes {
   margin: 0px;
   padding: 0px;
-}
-#bwMode li {
-  display: block;
+  .selected {
+    box-shadow: inset 0 0 0 4px #777, inset 0 0 0 6px #fff;
+  }
+  li {
+    /* FG yellow: #fa3 or rgba(255, 170, 0) */
+    /* FG black: #000f */
+    --text-mode-fg-color: rgba(0, 0, 0, var(--text-mode-fg-opacity));
+    --text-mode-bg-color: rgba(0, 0, 0, var(--text-mode-bg-opacity));
+  }
 }
 #imageModeSolid li,
 #imageModeStripes li {
@@ -57,80 +68,22 @@ h2 {
   width: 100px;
   height: 100px;
   margin: 5px;
-}
-#imageModeSolid li input,
-#imageModeStripes li input {
-  display: none;
-}
-#imageModeSolid li label,
-#imageModeStripes li label {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-#imageModeSolid .selected,
-#imageModeStripes .selected {
-  box-shadow: inset 0 0 0 4px #777, inset 0 0 0 6px #fff;
-}
-
-/* ———————————————————————————————————— */
-/* Gradient color/opacity */
-/* ———————————————————————————————————— */
-#imageModeSolidLi0,
-#imageModeStripesLi0 {
-  --text-mode-fg-opacity: var(--text-mode-opacity-10); /* 1 */
-  --text-mode-bg-opacity: var(--text-mode-opacity-0); /* 0 */
-}
-#imageModeSolidLi1,
-#imageModeStripesLi1 {
-  --text-mode-fg-opacity: var(--text-mode-opacity-30); /* 1 */
-  --text-mode-bg-opacity: var(--text-mode-opacity-0); /* 0 */
-}
-#imageModeSolidLi2,
-#imageModeStripesLi2 {
-  --text-mode-fg-opacity: var(--text-mode-opacity-50); /* 1 */
-  --text-mode-bg-opacity: var(--text-mode-opacity-0); /* 0 */
-}
-#imageModeSolidLi3,
-#imageModeStripesLi3 {
-  --text-mode-fg-opacity: var(--text-mode-opacity-70); /* 1 */
-  --text-mode-bg-opacity: var(--text-mode-opacity-0); /* 0 */
-}
-#imageModeSolidLi4,
-#imageModeStripesLi4 {
-  --text-mode-fg-opacity: var(--text-mode-opacity-90); /* 1 */
-  --text-mode-bg-opacity: var(--text-mode-opacity-0); /* 0 */
-}
-#imageModeSolidLi0,
-#imageModeSolidLi1,
-#imageModeSolidLi2,
-#imageModeSolidLi3,
-#imageModeSolidLi4,
-#imageModeStripesLi0,
-#imageModeStripesLi1,
-#imageModeStripesLi2,
-#imageModeStripesLi3,
-#imageModeStripesLi4 {
-  /* FG yellow: #fa3 or rgba(255, 170, 0) */
-  /* FG black: #000f */
-  --text-mode-fg-color: rgba(0, 0, 0, var(--text-mode-fg-opacity));
-  --text-mode-bg-color: rgba(0, 0, 0, var(--text-mode-bg-opacity));
+  input {
+    display: none;
+  }
+  label {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
 }
 /* ———————————————————————————————————— */
 /* Solid vs Stripes */
 /* ———————————————————————————————————— */
-#imageModeSolidLi0,
-#imageModeSolidLi1,
-#imageModeSolidLi2,
-#imageModeSolidLi3,
-#imageModeSolidLi4 {
+#imageModeSolid li {
   background: var(--text-mode-fg-color) !important;
 }
-#imageModeStripesLi0,
-#imageModeStripesLi1,
-#imageModeStripesLi2,
-#imageModeStripesLi3,
-#imageModeStripesLi4 {
+#imageModeStripes li {
   background: repeating-linear-gradient(
     -45deg,
     var(--text-mode-fg-color),

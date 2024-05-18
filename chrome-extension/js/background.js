@@ -22,12 +22,11 @@ let options;
 function setDefaultOptions() {
   // Very first session ever running the extensions by the user
   options.enable_all = false;
-  options.replacement_image = 1;
   options.is_desaturated = true;
   options.increase_contrast = false;
   options.use_white_bg = false;
 
-  //   options.replacement_image = event.target.value;
+  options.config_img_bg_type = "stripes-50";
   options.config_img_bg_use_stripes = true;
   options.config_img_bg_opacity = 50;
 
@@ -188,11 +187,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       const options = data.options || {};
       const response = {
         enableAll: options.enable_all === true,
-        replacementImageID: options.replacement_image || 1,
         isDesaturated: options.is_desaturated === true,
         increaseContrast: options.increase_contrast === true,
         useWhiteBg: options.use_white_bg === true,
         // ---
+        config_img_bg_type: options.config_img_bg_type || 1,
         config_img_bg_opacity: options.config_img_bg_opacity || 50,
         config_img_bg_use_stripes: options.config_img_bg_use_stripes || false,
       };
