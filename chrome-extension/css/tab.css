@@ -31,6 +31,20 @@
 }
 
 /* ———————————————————————————————————— */
+/* helps avoid flashing */
+/* ———————————————————————————————————— */
+/* This style auto-removes itself once the extension has loaded */
+/* ———————————————————————————————————— */
+body:not(.__text_mode_READY__) img[src^="data:image/"] {
+  visibility: hidden;
+}
+
+body:not(.__text_mode_READY__) svg image[href^="data:image/"],
+body:not(.__text_mode_READY__) svg image[xlink\:href^="data:image/"] {
+  visibility: hidden;
+}
+
+/* ———————————————————————————————————— */
 /* IMAGES + BG Images - Replace w/ pattern */
 /* ———————————————————————————————————— */
 

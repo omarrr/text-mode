@@ -223,8 +223,6 @@ function setListeners() {
 
 const imageReplacement = chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
 function applyBlockingRules() {
-  //   var imageReplacement = chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
-
   console.log("applyBlockingRules");
 
   chrome.declarativeNetRequest.updateDynamicRules({
