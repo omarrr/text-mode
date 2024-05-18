@@ -20,8 +20,19 @@ body {
 #head {
   margin-left: auto;
   margin-right: auto;
-  width: 128px;
+  /* width: 128px; */
   text-align: center;
+
+  position: relative;
+  height: 250px;
+}
+#head img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: 250px;
 }
 #content {
   clear: both;
@@ -68,6 +79,7 @@ h2 {
   width: 100px;
   height: 100px;
   margin: 5px;
+  border-radius: 5px;
   input {
     display: none;
   }

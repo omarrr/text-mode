@@ -102,40 +102,40 @@ function refreshTab(tabId) {
 //------------------------------------------------
 // ENABLE / DISABLE Mode
 //------------------------------------------------
-// function getIsEnableAll(callback) {
-//   chrome.storage.sync.get("options", (data) => {
-//     const options = data.options || {};
-//     // console.log("getIsEnableAll");
-//     // console.log(options);
-//     // console.log(
-//     //   "options.enable_all => " +
-//     //     options.enable_all +
-//     //     "..." +
-//     //     typeof options.enable_all
-//     // );
-//     callback(options.enable_all === true);
-//   });
-// }
 function getIsEnableAll(callback) {
-  callback(options.enable_all === true);
+  chrome.storage.sync.get("options", (data) => {
+    const options = data.options || {};
+    // console.log("getIsEnableAll");
+    // console.log(options);
+    // console.log(
+    //   "options.enable_all => " +
+    //     options.enable_all +
+    //     "..." +
+    //     typeof options.enable_all
+    // );
+    callback(options.enable_all === true);
+  });
 }
-// function setIsEnableAll(enable, callback) {
-//   //   console.log(">>> setIsEnableAll: " + enable + "..." + typeof enable);
-//   chrome.storage.sync.get("options", (data) => {
-//     const options = data.options || {};
-//     options.enable_all = enable;
-//     chrome.storage.sync.set({ options });
-
-//     callback(enable);
-//   });
+// function getIsEnableAll(callback) {
+//   callback(options.enable_all === true);
 // }
 function setIsEnableAll(enable, callback) {
   //   console.log(">>> setIsEnableAll: " + enable + "..." + typeof enable);
-  options.enable_all = enable;
-  chrome.storage.sync.set({ options });
+  chrome.storage.sync.get("options", (data) => {
+    const options = data.options || {};
+    options.enable_all = enable;
+    chrome.storage.sync.set({ options });
 
-  callback(enable);
+    callback(enable);
+  });
 }
+// function setIsEnableAll(enable, callback) {
+//   //   console.log(">>> setIsEnableAll: " + enable + "..." + typeof enable);
+//   options.enable_all = enable;
+//   chrome.storage.sync.set({ options });
+
+//   callback(enable);
+// }
 
 function toggleIsEnableAll() {
   getIsEnableAll((isEnabled) => {
