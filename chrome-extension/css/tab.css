@@ -1,8 +1,10 @@
 /* —————————————————— */
 /* GLOBAL ——————————— */
 /* —————————————————— */
+/* 
 .__text_mode_ENABLED__ {
-}
+} 
+*/
 
 /* ———————————————————————————————————— */
 /* B&W Mode - Page level fix ——————————— */
@@ -47,7 +49,6 @@ body:not(.__text_mode_READY__) svg image[xlink\:href^="data:image/"] {
 /* ———————————————————————————————————— */
 /* IMAGES + BG Images - Replace w/ pattern */
 /* ———————————————————————————————————— */
-
 :root {
   --text-mode-opacity-0: 0;
   --text-mode-opacity-10: 0.1;
@@ -91,7 +92,6 @@ body:not(.__text_mode_READY__) svg image[xlink\:href^="data:image/"] {
 /* ———————————————————————————————————— */
 /* BG + FG as f(variants) */
 /* ———————————————————————————————————— */
-
 .__text_mode_READY__ {
   --text-mode-fg-color: rgba(
     255,
@@ -111,7 +111,6 @@ body:not(.__text_mode_READY__) svg image[xlink\:href^="data:image/"] {
     0,
     var(--text-mode-bg-opacity)
   ); /* #000 #0000 */
-  /* --text-mode-stripe-width: 10px; */
 
   --text-mode-bg-striped: repeating-linear-gradient(
     -45deg,
@@ -145,7 +144,6 @@ body:not(.__text_mode_READY__) svg image[xlink\:href^="data:image/"] {
   applet image,
   video,
   .__text_mode_custom_bg__ {
-    /* background: var(--text-mode-bg-striped) !important; */
     background-color: var(--text-mode-fg-color) !important;
   }
 }
