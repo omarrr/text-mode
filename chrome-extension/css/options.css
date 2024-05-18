@@ -20,19 +20,18 @@ body {
 #head {
   margin-left: auto;
   margin-right: auto;
-  /* width: 128px; */
   text-align: center;
 
   position: relative;
-  height: 250px;
+  height: 192px;
 }
 #head img {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 250px;
-  height: 250px;
+  width: 192px;
+  height: 192px;
 }
 #content {
   clear: both;
