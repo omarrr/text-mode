@@ -122,33 +122,48 @@ body:not(.__text_mode_READY__) svg image[xlink\:href^="data:image/"] {
 }
 
 .__text_mode_ENABLED__.__text_mode_stripes__ {
+  /* video, */
   img,
   /* svg, */
   canvas,
-  video,
   object,
   embed,
   applet image,
-  video,
   .__text_mode_custom_bg__ {
     background: var(--text-mode-bg-striped) !important;
   }
 }
 .__text_mode_ENABLED__.__text_mode_solid__ {
+  /* video, */
   img,
   /* svg, */
   canvas,
-  video,
   object,
   embed,
   applet image,
-  video,
   .__text_mode_custom_bg__ {
     background-color: var(--text-mode-fg-color) !important;
   }
 }
 
-.__text_mode_ENABLED__ svg,
-.__text_mode_ENABLED__ video {
+/* .__text_mode_ENABLED__ video, */
+.__text_mode_ENABLED__ svg {
   filter: var(--text-mode-filter);
+}
+
+/* ———————————————————————————————————— */
+/* VIDEO */
+/* ———————————————————————————————————— */
+.__text_mode_ENABLED__.__text_mode_videoless__ video {
+  filter: var(--text-mode-filter);
+}
+.__text_mode_ENABLED__.__text_mode_videoless__.__text_mode_solid__ video {
+  .__text_mode_custom_bg__ {
+    background-color: var(--text-mode-fg-color) !important;
+  }
+}
+.__text_mode_ENABLED__.__text_mode_videoless__.__text_mode_stripes__ video {
+  .__text_mode_custom_bg__ {
+    background: var(--text-mode-bg-striped) !important;
+  }
 }

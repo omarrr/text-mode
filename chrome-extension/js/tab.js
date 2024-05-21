@@ -31,6 +31,7 @@ function getMode() {
       config_adjust_saturation = response.config_adjust_saturation;
       config_adjust_contrast = response.config_adjust_contrast;
       config_adjust_white_bg = response.config_adjust_white_bg;
+      config_adjust_video = response.config_adjust_video;
       //---
       config_img_bg_type = response.config_img_bg_type;
       config_img_bg_opacity = response.config_img_bg_opacity;
@@ -82,8 +83,11 @@ function replaceBase64ImagesInSVGs() {
     });
   }
 }
+// ————————————————————————————————————
+// Video content
+// ————————————————————————————————————
 function replaceVideos() {
-  if (isEnabled) {
+  if (isEnabled && config_adjust_video) {
     const videos = document.querySelectorAll("video");
     // const blankImg = getBlankImg();
     videos.forEach((video) => {
@@ -128,7 +132,11 @@ function observeDOMChanges() {
 //
 function injectCustomCSS() {
   // Find all elements with background-image
-  const allElements = document.querySelectorAll("*");
+  //   const allElements = document.querySelectorAll("*");
+  const allElements = document.querySelectorAll(
+    "*:not(.ytp-gradient-bottom):not(.ytp-gradient-top)"
+  );
+
   allElements.forEach((el) => {
     const style = window.getComputedStyle(el);
     if (style.backgroundImage !== "none") {
@@ -157,6 +165,7 @@ function setBodyClasses() {
     if (config_adjust_contrast)
       body.classList.add("__text_mode_increase_contrast__");
     if (config_adjust_white_bg) body.classList.add("__text_mode_white_bg__");
+    if (config_adjust_video) body.classList.add("__text_mode_videoless__");
 
     body.classList.add(`__text_mode_fg_${config_img_bg_opacity}__`);
     if (config_img_bg_use_stripes) body.classList.add("__text_mode_stripes__");

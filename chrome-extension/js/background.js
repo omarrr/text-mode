@@ -26,6 +26,7 @@ function setDefaultOptions() {
   options.config_adjust_saturation = true;
   options.config_adjust_contrast = false;
   options.config_adjust_white_bg = false;
+  options.config_adjust_video = false;
 
   options.config_img_bg_type = "stripes-50";
   options.config_img_bg_use_stripes = true;
@@ -98,7 +99,8 @@ function refreshTab(tabId) {
 //------------------------------------------------
 function getIsEnableAll(callback) {
   chrome.storage.sync.get("options", (data) => {
-    const options = data.options || {};
+    // const options = data.options || {};
+    options = data.options || {};
 
     callback(options.enable_all === true);
   });
@@ -106,7 +108,8 @@ function getIsEnableAll(callback) {
 function setIsEnableAll(enable, callback) {
   //   console.log(">>> setIsEnableAll: " + enable + "..." + typeof enable);
   chrome.storage.sync.get("options", (data) => {
-    const options = data.options || {};
+    // const options = data.options || {};
+    options = data.options || {};
     options.enable_all = enable;
     chrome.storage.sync.set({ options });
 
@@ -130,12 +133,14 @@ function toggleIsEnableAll() {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.method === "getMode") {
     chrome.storage.sync.get("options", (data) => {
-      const options = data.options || {};
+      // const options = data.options || {};
+      options = data.options || {};
       const response = {
         enableAll: options.enable_all === true,
         config_adjust_saturation: options.config_adjust_saturation === true,
         config_adjust_contrast: options.config_adjust_contrast === true,
         config_adjust_white_bg: options.config_adjust_white_bg === true,
+        config_adjust_video: options.config_adjust_video === true,
         // ---
         config_img_bg_type: options.config_img_bg_type || 1,
         config_img_bg_opacity: options.config_img_bg_opacity || 50,
@@ -171,6 +176,11 @@ const imageReplacement = chrome.runtime.getURL("imgs/bg/bg_blank_1px.png");
 function applyBlockingRules() {
   //   console.log("applyBlockingRules");
 
+  let elementsToBlock = options.config_adjust_video
+    ? ["image", "object", "media"]
+    : ["image", "object"];
+  //   "xmlhttprequest","websocket","other","sub_frame",
+
   chrome.declarativeNetRequest.updateDynamicRules({
     addRules: [
       {
@@ -183,12 +193,13 @@ function applyBlockingRules() {
         },
         condition: {
           urlFilter: "*",
-          resourceTypes: [
-            "image",
-            "object",
-            "media",
-            //   "xmlhttprequest","websocket","other","sub_frame",
-          ],
+          resourceTypes: elementsToBlock,
+          //   resourceTypes: [
+          //     "image",
+          //     "object",
+          //     // "media",
+          //     //   "xmlhttprequest","websocket","other","sub_frame",
+          //   ],
         },
       },
     ],

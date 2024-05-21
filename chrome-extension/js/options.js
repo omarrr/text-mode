@@ -35,6 +35,7 @@ getOptions(() => {
   optionsForm.adjust_white_bg_el.checked = Boolean(
     options.config_adjust_white_bg
   );
+  optionsForm.adjust_video_el.checked = Boolean(options.config_adjust_video);
   imageReplacementInputs.forEach((input) => {
     // console.log(">>>>>");
     // console.log("  input.value: " + input.value);
@@ -66,6 +67,12 @@ optionsForm.config_adjust_contrast_el.addEventListener("change", (event) => {
 });
 optionsForm.adjust_white_bg_el.addEventListener("change", (event) => {
   options.config_adjust_white_bg = event.target.checked;
+  chrome.storage.sync.set({ options });
+
+  setHeadClasses();
+});
+optionsForm.adjust_video_el.addEventListener("change", (event) => {
+  options.config_adjust_video = event.target.checked;
   chrome.storage.sync.set({ options });
 
   setHeadClasses();
@@ -121,6 +128,8 @@ function setHeadClasses() {
     icon_right.classList.add("__text_mode_increase_contrast__");
   if (options.config_adjust_white_bg)
     icon_right.classList.add("__text_mode_white_bg__");
+  if (options.config_adjust_video)
+    icon_right.classList.add("__text_mode_videoless__");
 
   icon_right.classList.add(`__text_mode_fg_${options.config_img_bg_opacity}__`);
   if (options.config_img_bg_use_stripes)
