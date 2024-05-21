@@ -19,6 +19,37 @@ Text Mode declutters the web by loading all pages in text form (no images, anima
 
 [Text Mode](https://chrome.google.com/webstore/detail/adelhekhakakocomdfejiipdnaadiiib/) is available at the Chrome web store.
 
+### Title from package
+
+Text Mode
+
+### Summary from package
+
+Browse the web without distractions via simple text based pages.
+
+### Description
+
+Declutter the web by activating Text Mode. Pages load in text-only format, eliminating images, animations, and videos. This makes content easier to scan and read.
+
+★ View text only pages
+★ Images and video, are never loaded
+★ Color-free pages are easier on the eye
+★ Reduce page load
+★ One-click easy access
+★ Removes 99% of the ads with no extra software
+★ No ads, no tracking, no nothing. Just text.
+———
+New in v0.6 - Improved Security and Performance
+★ More customization options
+★ Blocks even more formats (including Google Images results, SVG elements, figures, background images, etc.)
+
+———
+
+Previous updates:
+☆ Options page
+☆ Multiple image replacement options
+☆ Requires even fewer permission from the user.
+
 ## Resources
 
 * Chrome Extensions

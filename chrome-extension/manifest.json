@@ -10,7 +10,7 @@
     "128": "icons/icon_128x128.png"
   },
 
-  "permissions": ["storage", "activeTab", "declarativeNetRequest", "scripting"],
+  "permissions": ["storage", "declarativeNetRequest"],
 
   "host_permissions": ["<all_urls>"],
 
