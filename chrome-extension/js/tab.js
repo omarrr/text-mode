@@ -133,6 +133,8 @@ function observeDOMChanges() {
 function injectCustomCSS() {
   // Find all elements with background-image
   //   const allElements = document.querySelectorAll("*");
+
+  // Avoid replacing youtube overlays for clarity on hover
   const allElements = document.querySelectorAll(
     "*:not(.ytp-gradient-bottom):not(.ytp-gradient-top)"
   );

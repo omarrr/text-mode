@@ -25,9 +25,25 @@
 /* ———————————————————————————————————— */
 /* BG IMAGES - Prepare ——————————— */
 /* ———————————————————————————————————— */
+/* 
 .__text_mode_ENABLED__ [style*="background-image"],
 .__text_mode_ENABLED__ [style*="background-image: url"],
 .__text_mode_ENABLED__ [style*="background: url"] {
+  background-size: auto !important;
+  background-repeat: repeat !important;
+}
+*/
+/* ———————————————————————————————————— */
+/* Do not replace the YouTube Overlays for clarity */
+/* ———————————————————————————————————— */
+.__text_mode_ENABLED__
+  [style*="background-image"]:not(.ytp-gradient-bottom):not(.ytp-gradient-top),
+.__text_mode_ENABLED__
+  [style*="background-image: url"]:not(.ytp-gradient-bottom):not(
+    .ytp-gradient-top
+  ),
+.__text_mode_ENABLED__
+  [style*="background: url"]:not(.ytp-gradient-bottom):not(.ytp-gradient-top) {
   background-size: auto !important;
   background-repeat: repeat !important;
 }
@@ -122,7 +138,6 @@ body:not(.__text_mode_READY__) svg image[xlink\:href^="data:image/"] {
 }
 
 .__text_mode_ENABLED__.__text_mode_stripes__ {
-  /* video, */
   img,
   /* svg, */
   canvas,
@@ -134,7 +149,6 @@ body:not(.__text_mode_READY__) svg image[xlink\:href^="data:image/"] {
   }
 }
 .__text_mode_ENABLED__.__text_mode_solid__ {
-  /* video, */
   img,
   /* svg, */
   canvas,
@@ -146,7 +160,6 @@ body:not(.__text_mode_READY__) svg image[xlink\:href^="data:image/"] {
   }
 }
 
-/* .__text_mode_ENABLED__ video, */
 .__text_mode_ENABLED__ svg {
   filter: var(--text-mode-filter);
 }
@@ -165,5 +178,17 @@ body:not(.__text_mode_READY__) svg image[xlink\:href^="data:image/"] {
 .__text_mode_ENABLED__.__text_mode_videoless__.__text_mode_stripes__ video {
   .__text_mode_custom_bg__ {
     background: var(--text-mode-bg-striped) !important;
+  }
+}
+
+/* ———————————————————————————————————— */
+/* YouTube Message */
+/* ———————————————————————————————————— */
+.__text_mode_ENABLED__.__text_mode_videoless__ {
+  .ytp-error-content-wrap-reason span {
+    display: none;
+  }
+  .ytp-error-content-wrap-reason::after {
+    content: "Video blocked by Text Mode.";
   }
 }
